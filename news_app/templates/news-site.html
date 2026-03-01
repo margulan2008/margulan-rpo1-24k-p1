@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ВЕСТНИК — Новости</title>
+{% load static %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+
+<!-- PWA Support -->
+<link rel="manifest" href="{% static 'manifest.json' %}">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect fill='%23b8860b' width='192' height='192'/%3E%3Ctext x='50%' y='50%' font-size='120' font-family='serif' font-weight='bold' fill='white' text-anchor='middle' dominant-baseline='central'%3EВ%3C/text%3E%3C/svg%3E">
+<meta name="theme-color" content="#b8860b">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="ВЕСТНИК">
+</head>
+<body>
+
+<div id="readingBar"></div>
+
+<div class="ticker-wrap">
+  <span class="ticker-inner">
+    <span class="ticker-item">Нефть марки Brent выросла на 2% — рекордный уровень за 6 месяцев</span>
+    <span class="ticker-item">Центробанк сохранил ключевую ставку на уровне 16%</span>
+    <span class="ticker-item">Ученые открыли новый вид динозавра в Аргентине</span>
+    <span class="ticker-item">Технологический индекс NASDAQ вырос на 1.8%</span>
+    <span class="ticker-item">Чемпионат мира по футболу 2026: жеребьёвка групп завершена</span>
+    <span class="ticker-item">Новый рекорд по квантовым вычислениям установлен в MIT</span>
+    <span class="ticker-item">Международный форум по климату открывается в Женеве</span>
+  </span>
+</div>
+
+<header class="masthead">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-12 col-md-8">
+        <a href="{% url 'home_page' %}" class="masthead-title d-block">ВЕСТНИК</a>
+        <div class="masthead-sub">Независимое издание · Основано в 2024 · Мировые новости</div>
+      </div>
+      <div class="col-12 col-md-4 date-line mt-2 mt-md-0">
+        <div id="currentDate"></div>
+        <div>Выпуск №247</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <button class="mobile-nav-toggle" onclick="toggleNav()">
+      <span><i class="bi bi-list me-1"></i> Разделы</span>
+      <i class="bi bi-chevron-down" id="navChevron"></i>
+    </button>
+    <div class="nav-collapse" id="navCollapse">
+      <ul class="nav flex-wrap" id="mainNav">
+        <li class="nav-item"><a class="nav-link active" href="#" data-cat="all">Все новости</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-cat="politics">Политика</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-cat="economy">Экономика</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-cat="technology">Технологии</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-cat="science">Наука</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-cat="sports">Спорт</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-cat="culture">Культура</a></li>
+        <li class="nav-item"><a class="nav-link" href="#" data-cat="world">Мир</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'trending_page' %}">🔥 Топ недели</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'search_page' %}"><i class="bi bi-search"></i> Поиск</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'favorites_page' %}"><i class="bi bi-bookmark"></i> Избранное</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="cat-strip">
+  <button class="cat-strip-btn active" onclick="setCat(this,'all')">Все</button>
+  <button class="cat-strip-btn" onclick="setCat(this,'politics')">Политика</button>
+  <button class="cat-strip-btn" onclick="setCat(this,'economy')">Экономика</button>
+  <button class="cat-strip-btn" onclick="setCat(this,'technology')">Технологии</button>
+  <button class="cat-strip-btn" onclick="setCat(this,'science')">Наука</button>
+  <button class="cat-strip-btn" onclick="setCat(this,'sports')">Спорт</button>
+  <button class="cat-strip-btn" onclick="setCat(this,'culture')">Культура</button>
+  <button class="cat-strip-btn" onclick="setCat(this,'world')">Мир</button>
+</div>
+
+<div class="search-bar">
+  <div class="container">
+    <div class="row align-items-center">
+      <div class="col-md-6">
+        <div class="input-group">
+          <input type="text" class="form-control" id="searchInput" placeholder="Поиск новостей..."/>
+          <button class="btn" onclick="doSearch()"><i class="bi bi-search me-1"></i>Поиск</button>
+        </div>
+      </div>
+      <div class="col-md-6 mt-2 mt-md-0"><div id="categoryTags"></div></div>
+    </div>
+  </div>
+</div>
+
+<main class="container mt-4">
+  <div class="row">
+    <div class="col-lg-8">
+      <div id="heroSection"></div>
+      <div class="section-label">Последние новости</div>
+      <div class="row" id="newsGrid"></div>
+      <nav class="mt-4"><ul class="pagination justify-content-center" id="pagination"></ul></nav>
+    </div>
+    <aside class="col-lg-4 sidebar">
+      <div class="sidebar-widget weather-widget">
+        <h6>Погода</h6>
+        <div class="weather-icon"><i class="bi bi-cloud-sun-fill"></i></div>
+        <div class="weather-temp" id="weatherTemp">—°C</div>
+        <div class="weather-city">Алматы</div>
+        <small id="weatherDesc" style="font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted)"></small>
+      </div>
+      {% if ads_sidebar and ads_sidebar|length > 0 %}
+        {% for ad in ads_sidebar|slice:":2" %}
+        <div class="sidebar-widget ad-widget text-center mb-3">
+          {% if ad.link %}<a href="{{ ad.link }}" target="_blank" rel="noopener">{% endif %}
+          {% if ad.image %}
+            <img src="{{ ad.image.url }}" alt="{{ ad.name }}" class="img-fluid" />
+          {% elif ad.image_url %}
+            <img src="{{ ad.image_url }}" alt="{{ ad.name }}" class="img-fluid" />
+          {% endif %}
+          {% if ad.link %}</a>{% endif %}
+        </div>
+        {% endfor %}
+      {% endif %}
+      <div class="sidebar-widget">
+        <h6>В тренде</h6>
+        <div id="trendingList"></div>
+      </div>
+      <div class="sidebar-widget">
+        <h6>Темы</h6>
+        <div id="tagCloud"></div>
+      </div>
+      <div class="sidebar-widget">
+        <h6>Рассылка</h6>
+        <p style="font-size:13px;color:var(--muted)">Получайте главные новости каждое утро.</p>
+        <input type="email" class="form-control mb-2" id="emailInput" placeholder="Ваш e-mail" style="border-radius:0;font-size:13px"/>
+        <button class="btn w-100" style="background:var(--ink);color:#fff;border-radius:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px" onclick="subscribe()">Подписаться</button>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="footer-brand">ВЕСТНИК</div>
+        <p class="mt-2" style="font-size:11px;color:#666">Независимое медиа. Правда без фильтров.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Разделы</h6>
+        <a href="{% url 'home_page' %}">Новости</a><a href="{% url 'rubric_page' %}">Рубрики</a><a href="{% url 'archive_page' %}">Архив</a><a href="{% url 'about_page' %}">О нас</a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Редакция</h6>
+        <a href="{% url 'about_page' %}">О сайте</a><a href="{% url 'contacts_page' %}">Контакты</a><a href="#">Реклама</a><a href="#">Вакансии</a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Соцсети</h6>
+        <a href="#"><i class="bi bi-telegram me-2"></i>Telegram</a>
+        <a href="#"><i class="bi bi-youtube me-2"></i>YouTube</a>
+        <a href="#"><i class="bi bi-vk me-2"></i>ВКонтакте</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 ВЕСТНИК · Все права защищены · 18+</div>
+  </div>
+</footer>
+
+<div class="modal fade" id="articleModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+      <div class="modal-footer" style="border-top:1px solid var(--border)">
+        <button class="btn btn-sm" style="background:var(--ink);color:#fff;border-radius:0;font-family:'JetBrains Mono',monospace;font-size:11px" data-bs-dismiss="modal">Закрыть</button>
+        <button class="btn btn-sm" style="background:transparent;border:1px solid var(--ink);border-radius:0;font-family:'JetBrains Mono',monospace;font-size:11px" onclick="shareArticle()"><i class="bi bi-share me-1"></i>Поделиться</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="liveToast" class="toast align-items-center" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg"></div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<div class="mobile-bottom-nav">
+  <a href="#" onclick="setCatMobile('all');return false" id="btn-all" class="active"><i class="bi bi-house-fill"></i><span>Главная</span></a>
+  <a href="#" onclick="setCatMobile('technology');return false" id="btn-technology"><i class="bi bi-cpu-fill"></i><span>Техно</span></a>
+  <a href="#" onclick="setCatMobile('sports');return false" id="btn-sports"><i class="bi bi-trophy-fill"></i><span>Спорт</span></a>
+  <a href="#" onclick="focusSearch();return false"><i class="bi bi-search"></i><span>Поиск</span></a>
+  <a href="#" onclick="window.scrollTo({top:0,behavior:'smooth'});return false"><i class="bi bi-arrow-up-circle-fill"></i><span>Наверх</span></a>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script src="{% static 'js/script.js' %}"></script>
+</body>
+</html>

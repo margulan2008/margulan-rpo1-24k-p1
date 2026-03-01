@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Рубрика — ВЕСТНИК</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+{% load static %}
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<div id="readingBar"></div>
+
+<div class="ticker-wrap">
+  <span class="ticker-inner">
+    <span class="ticker-item">Нефть марки Brent выросла на 2%</span>
+    <span class="ticker-item">Центробанк сохранил ключевую ставку на уровне 16%</span>
+    <span class="ticker-item">Ученые открыли новый вид динозавра</span>
+  </span>
+</div>
+
+<header class="masthead">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-12 col-md-8">
+        <a href="{% url 'home_page' %}" class="masthead-title d-block">ВЕСТНИК</a>
+        <div class="masthead-sub">Независимое издание · Основано в 2024 · Мировые новости</div>
+      </div>
+      <div class="col-12 col-md-4 date-line mt-2 mt-md-0">
+        <div id="currentDate"></div>
+        <div id="rubricName">Рубрика</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <button class="mobile-nav-toggle" onclick="toggleNav()">
+      <span><i class="bi bi-list me-1"></i> Разделы</span>
+      <i class="bi bi-chevron-down" id="navChevron"></i>
+    </button>
+    <div class="nav-collapse" id="navCollapse">
+      <ul class="nav flex-wrap" id="mainNav">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}">Все новости</a></li>
+        <li class="nav-item"><a class="nav-link" href="rubrics.html">Рубрики</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'archive_page' %}">Архив</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about_page' %}">О нас</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'contacts_page' %}">Контакты</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container mt-5">
+  <div class="row">
+    <div class="col-lg-8">
+      <h1 class="hero-title mb-4" id="pageTitle">Технологии</h1>
+      
+      <div class="section-label">Статьи в рубрике</div>
+      <div class="row" id="rubricGrid"></div>
+      <nav class="mt-4"><ul class="pagination justify-content-center" id="pagination"></ul></nav>
+    </div>
+
+    <aside class="col-lg-4 sidebar">
+      <div class="sidebar-widget">
+        <h6>О рубрике</h6>
+        <p id="rubricDesc" style="font-size:13px;color:var(--muted);line-height:1.8"></p>
+      </div>
+      <div class="sidebar-widget">
+        <h6>Подписка</h6>
+        <p style="font-size:13px;color:var(--muted);margin-bottom:12px">Получайте все новые статьи этой рубрики на почту.</p>
+        <input type="email" class="form-control mb-2" placeholder="Ваш e-mail" style="border-radius:0;font-size:13px"/>
+        <button class="btn w-100" style="background:var(--ink);color:#fff;border-radius:0;font-family:'JetBrains Mono',monospace;font-size:12px;letter-spacing:1px" onclick="subscribe()">
+          <i class="bi bi-bell me-1"></i>Подписаться
+        </button>
+      </div>
+      <div class="sidebar-widget">
+        <h6>Другие рубрики</h6>
+        <a href="rubric.html?cat=politics" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s">Политика</a>
+        <a href="rubric.html?cat=economy" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s;margin-top:8px">Экономика</a>
+        <a href="rubric.html?cat=technology" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s;margin-top:8px">Технологии</a>
+        <a href="rubric.html?cat=science" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s;margin-top:8px">Наука</a>
+        <a href="rubric.html?cat=sports" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s;margin-top:8px">Спорт</a>
+        <a href="rubric.html?cat=culture" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--border);transition:color 0.2s;margin-top:8px">Культура</a>
+        <a href="rubric.html?cat=world" style="display:block;padding:8px 0;color:var(--ink);text-decoration:none;margin-top:8px">Мир</a>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="footer-brand">ВЕСТНИК</div>
+        <p class="mt-2" style="font-size:11px;color:#666">Независимое медиа. Правда без фильтров.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Разделы</h6>
+        <a href="{% url 'home_page' %}">Новости</a><a href="rubrics.html">Рубрики</a><a href="{% url 'archive_page' %}">Архив</a><a href="{% url 'about_page' %}">О нас</a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Редакция</h6>
+        <a href="{% url 'about_page' %}">О сайте</a><a href="{% url 'contacts_page' %}">Контакты</a><a href="#">Реклама</a><a href="#">Вакансии</a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Соцсети</h6>
+        <a href="#"><i class="bi bi-telegram me-2"></i>Telegram</a>
+        <a href="#"><i class="bi bi-youtube me-2"></i>YouTube</a>
+        <a href="#"><i class="bi bi-vk me-2"></i>ВКонтакте</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 ВЕСТНИК · Все права защищены · 18+</div>
+  </div>
+</footer>
+
+<div class="modal fade" id="articleModal" tabindex="-1">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="modalTitle"></h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body" id="modalBody"></div>
+    </div>
+  </div>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="liveToast" class="toast align-items-center" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg"></div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+const ARTICLES = [
+  {id:1,cat:'technology',title:'Anthropic представила революционный ИИ-ассистент нового поколения',lead:'Компания анонсировала модель с беспрецедентными способностями к рассуждению и анализу.',body:'Компания Anthropic объявила о выпуске новейшей версии своего ИИ-ассистента Claude, которая продемонстрировала выдающиеся результаты в тестах по математике, физике и программированию.\n\nВ ходе демонстрации ассистент успешно справился с задачами олимпийского уровня по физике, разработал функциональный компилятор с нуля и предложил несколько оригинальных гипотез в области квантовой химии.\n\nAnthropic подчёркивает, что особое внимание уделялось безопасности. Доступ открывается поэтапно, начиная с исследовательских институтов.',author:'Алексей Петров',date:'26 февраля 2026',img:'https://images.unsplash.com/photo-1677442135703-1787eea5ce01?w=800&q=80'},
+  {id:2,cat:'economy',title:'Мировые рынки реагируют на решение ФРС по ставке',lead:'S&P 500 обновил исторический максимум после заявления регулятора.',body:'Американский регулятор сохранил ключевую ставку на уровне 4,5%. Индекс S&P 500 отреагировал ростом на 1,4%, достигнув нового исторического максимума.\n\nАналитики Goldman Sachs считают, что первое снижение ставки произойдёт не ранее осени 2026 года.\n\nЕвропейские площадки также показали рост: немецкий DAX прибавил 0,9%, французский CAC 40 — 1,1%.',author:'Мария Иванова',date:'25 февраля 2026',img:'https://images.unsplash.com/photo-1611974789855-9c2a0a7236a3?w=800&q=80'},
+  {id:3,cat:'science',title:'Открыт новый тип чёрной дыры: учёные в восторге',lead:'Телескоп Джеймса Уэбба зафиксировал объект с характеристиками, не вписывающимися ни в одну из существующих теорий.',body:'Международная группа астрофизиков обнаружила объект в созвездии Ориона, масса которого — 3,2 солнечных массы, ниже теоретического минимума для чёрной дыры.\n\nПо предварительным данным, объект может быть «кварковой звездой» — промежуточным этапом между нейтронной звездой и чёрной дырой.\n\nРезультаты опубликованы в Nature Astronomy. Несколько независимых групп ведут наблюдения для подтверждения.',author:'Дмитрий Волков',date:'25 февраля 2026',img:'https://images.unsplash.com/photo-1462331940025-496dfbfc7564?w=800&q=80'},
+  {id:4,cat:'politics',title:'G20 принял историческое соглашение по климату',lead:'Лидеры крупнейших экономик мира подписали обязывающий документ о снижении выбросов.',body:'На саммите G20 в Йоханнесбурге подписан Йоханнесбургский климатический пакт. Документ предусматривает снижение выбросов CO₂ на 45% к 2035 году.\n\nСоздан специальный фонд в размере $500 млрд для финансирования перехода развивающихся стран на возобновляемые источники.\n\nПредставители НКО называют соглашение «шагом вперёд, но недостаточным», указывая на отсутствие механизмов принуждения.',author:'Ольга Смирнова',date:'24 февраля 2026',img:'https://images.unsplash.com/photo-1540910419892-4a36d2c3266c?w=800&q=80'},
+  {id:5,cat:'sports',title:'«Манчестер Сити» выигрывает Лигу чемпионов в экстра-тайме',lead:'Финальный матч завершился со счётом 3:2 после 120 минут напряжённой игры.',body:'На «Уэмбли» «Манчестер Сити» обыграл «Реал Мадрид» со счётом 3:2. Победный гол забил Холанд на 118-й минуте.\n\nЭто четвёртый титул Лиги чемпионов клуба. Гвардиола назвал матч «лучшим в тренерской карьере».\n\nМадридцы вели 2:1 после второго тайма, однако Де Брёйне вышел на замену на 89-й минуте и организовал два гола.',author:'Иван Кузнецов',date:'24 февраля 2026',img:'https://images.unsplash.com/photo-1489944440615-453fc2b6a9a9?w=800&q=80'},
+  {id:6,cat:'culture',title:'Каннский фестиваль объявил программу 2026 года',lead:'Главный конкурс откроет новый фильм Пон Джун-хо — спустя 6 лет после триумфа «Паразитов».',body:'Организаторы 79-го Каннского кинофестиваля представили официальную программу. В главном конкурсе — 21 фильм из 18 стран.\n\nОткрывает программу «Система Омега» Пон Джун-хо — антиутопический триллер о цифровом тоталитаризме.\n\nВ программе «Особый взгляд» — дебютный полный метр казахстанского режиссёра Айгерим Бековой.',author:'Наталья Белова',date:'23 февраля 2026',img:'https://images.unsplash.com/photo-1524712245354-2c4e5e7121c0?w=800&q=80'},
+  {id:7,cat:'technology',title:'Tesla анонсировала полностью автономный грузовик',lead:'Беспилотный Semi прошёл сертификацию в 12 штатах США и начнёт коммерческие перевозки летом.',body:'Tesla завершила разработку полностью автономного грузовика Tesla Semi FSD. Транспортное средство получило сертификацию уровня 4 в 12 американских штатах.\n\nПервые контракты подписаны с Amazon, Walmart и FedEx. Пробег на одной зарядке — 800 км.\n\nАналитики считают, что Tesla Semi способен радикально изменить логистическую отрасль в течение 5 лет.',author:'Алексей Петров',date:'23 февраля 2026',img:'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800&q=80'},
+  {id:8,cat:'world',title:'Исландия объявила о полном переходе на геотермальную энергию',lead:'Страна стала первой в мире, полностью отказавшейся от ископаемого топлива в энергетике.',body:'С 1 марта 2026 года Исландия полностью переходит на возобновляемые источники — геотермальную и гидроэнергетику.\n\nТранспортный сектор, включая рыболовный флот, переведён на электрическую тягу и водородное топливо.\n\nООН рассматривает исландскую модель как образец для малых островных государств.',author:'Мария Иванова',date:'22 февраля 2026',img:'https://images.unsplash.com/photo-1508193638397-1c4234db14d8?w=800&q=80'},
+  {id:9,cat:'science',title:'Первый ребёнок с редактированным геномом абсолютно здоров',lead:'Исследование 7-летнего мальчика из Китая показало положительные результаты.',body:'Международная группа врачей опубликовала результаты наблюдения за первым человеком, чей геном был отредактирован методом CRISPR-Cas9 до рождения. Ребёнок полностью здоров.\n\nВ 2018 году Хэ Цзянькуй отредактировал ген CCR5, связанный с восприимчивостью к ВИЧ. Учёный был осуждён.\n\nЭтика и правовой статус подобных вмешательств остаются предметом острых дискуссий.',author:'Дмитрий Волков',date:'22 февраля 2026',img:'https://images.unsplash.com/photo-1530026405186-ed1f139313f8?w=800&q=80'},
+];
+
+const CAT_LABELS = {politics:'Политика',economy:'Экономика',technology:'Технологии',science:'Наука',sports:'Спорт',culture:'Культура',world:'Мир'};
+const CAT_DESC = {
+  politics:'Новости государственной политики, выборы, международные отношения и дипломатия.',
+  economy:'Финансовые рынки, бизнес, инвестиции и экономические показатели.',
+  technology:'Инновации, IT, искусственный интеллект и гаджеты.',
+  science:'Научные открытия, космос, медицина и исследования.',
+  sports:'Футбол, хоккей, баскетбол, олимпиада и другие виды спорта.',
+  culture:'Кино, музыка, литература, искусство и развлечения.',
+  world:'Международные события, геополитика и мировые новости.'
+};
+
+let currentPage=1;
+const PER_PAGE=6;
+
+document.addEventListener('DOMContentLoaded',()=>{
+  document.getElementById('currentDate').textContent=new Date().toLocaleDateString('ru-RU',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+  
+  const params=new URLSearchParams(window.location.search);
+  const cat=params.get('cat')||'technology';
+  
+  document.getElementById('pageTitle').textContent=CAT_LABELS[cat]||'Рубрика';
+  document.getElementById('rubricName').textContent=CAT_LABELS[cat]||'Рубрика';
+  document.getElementById('rubricDesc').textContent=CAT_DESC[cat]||'Новости этой рубрики.';
+  
+  renderRubric(cat);
+  
+  window.addEventListener('scroll',()=>{
+    const el=document.documentElement;
+    const pct=el.scrollHeight-el.clientHeight>0?((el.scrollTop||document.body.scrollTop)/(el.scrollHeight-el.clientHeight))*100:0;
+    document.getElementById('readingBar').style.width=pct+'%';
+  });
+});
+
+function renderRubric(cat){
+  const filtered=ARTICLES.filter(a=>a.cat===cat);
+  const pages=Math.ceil(filtered.length/PER_PAGE)||1;
+  if(currentPage>pages)currentPage=1;
+  const slice=filtered.slice((currentPage-1)*PER_PAGE,currentPage*PER_PAGE);
+  
+  document.getElementById('rubricGrid').innerHTML=slice.map(a=>`
+    <div class="col-md-6 mb-4 fade-in">
+      <div class="news-card" onclick="openModal(${a.id})">
+        <img src="${a.img}" alt="" class="card-img">
+        <div class="card-category">${CAT_LABELS[a.cat]}</div>
+        <div class="card-title">${a.title}</div>
+        <p style="font-size:13px;color:var(--muted);margin:6px 0">${a.lead}</p>
+        <div class="card-meta"><a href="author.html" style="color:var(--muted);text-decoration:none;transition:color 0.2s" onmouseover="this.style.color='var(--red)'" onmouseout="this.style.color='var(--muted)'">${a.author}</a> · ${a.date}</div>
+      </div>
+    </div>`).join('');
+  
+  const ul=document.getElementById('pagination');
+  if(pages<=1){ul.innerHTML='';return;}
+  ul.innerHTML=`<li class="page-item ${currentPage===1?'disabled':''}"><a class="page-link" href="#" onclick="goPage(${currentPage-1});return false">‹</a></li>`
+    +Array.from({length:pages},(_,i)=>`<li class="page-item ${i+1===currentPage?'active':''}"><a class="page-link" href="#" onclick="goPage(${i+1});return false">${i+1}</a></li>`).join('')
+    +`<li class="page-item ${currentPage===pages?'disabled':''}"><a class="page-link" href="#" onclick="goPage(${currentPage+1});return false">›</a></li>`;
+}
+
+function goPage(p){if(p<1)return;currentPage=p;const cat=new URLSearchParams(window.location.search).get('cat')||'technology';renderRubric(cat);window.scrollTo({top:200,behavior:'smooth'});}
+
+function openModal(id){
+  const a=ARTICLES.find(x=>x.id===id);
+  if(!a)return;
+  document.getElementById('modalTitle').textContent=a.title;
+  document.getElementById('modalBody').innerHTML=`
+    <img src="${a.img}" alt="" class="modal-article-image">
+    <div class="modal-article-meta"><i class="bi bi-person me-1"></i><a href="author.html" style="color:var(--ink);text-decoration:none">${a.author}</a> · <i class="bi bi-calendar me-1"></i>${a.date} · <span style="color:var(--red)">${CAT_LABELS[a.cat]}</span></div>
+    ${a.body.split('\n\n').map(p=>`<p>${p}</p>`).join('')}`;
+  new bootstrap.Modal(document.getElementById('articleModal')).show();
+}
+
+function subscribe(){
+  showToast('Вы успешно подписались на рубрику!');
+}
+
+function showToast(msg){
+  document.getElementById('toastMsg').textContent=msg;
+  new bootstrap.Toast(document.getElementById('liveToast'),{delay:2500}).show();
+}
+
+function toggleNav(){
+  const c=document.getElementById('navCollapse');
+  c.classList.toggle('open');
+  document.getElementById('navChevron').className=c.classList.contains('open')?'bi bi-chevron-up':'bi bi-chevron-down';
+}
+</script>
+</body>
+</html>

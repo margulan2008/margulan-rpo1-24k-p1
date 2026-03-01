@@ -1,0 +1,25 @@
+{% extends 'base.html' %}
+
+{% block title %}Результаты поиска — {{ query }}{% endblock %}
+
+{% block content %}
+<h3>Результаты поиска «{{ query }}»</h3>
+{% if results %}
+  <div class="row">
+    {% for post in results %}
+    <div class="col-md-6 mb-3">
+      <div class="news-card">
+        <a href="{% url 'read_news_page' pk=post.pk %}"><img src="{{ post.image_url }}" alt="" class="card-img"></a>
+        <div class="card-body">
+          <h5 class="card-title"><a href="{% url 'read_news_page' pk=post.pk %}">{{ post.title }}</a></h5>
+          <div class="card-meta">{{ post.created_at|date:"d.m.Y" }}</div>
+        </div>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+{% else %}
+  <div class="alert alert-warning">Ничего не найдено. Попробуйте другой запрос.</div>
+{% endif %}
+
+{% endblock %}

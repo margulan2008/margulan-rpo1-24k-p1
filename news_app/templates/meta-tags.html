@@ -1,0 +1,101 @@
+<!-- Meta tags для SEO и производительности -->
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="ВЕСТНИК - независимое издание с мировыми новостями на русском языке. Политика, экономика, технологии, спорт и культура.">
+<meta name="keywords" content="новости, портал новостей, мировые события, Россия, политика, экономика, технологии">
+<meta name="author" content="ВЕСТНИК Editorial Team">
+<meta name="robots" content="index, follow">
+<meta name="theme-color" content="#b8860b">
+
+<!-- Open Graph для социальных сетей -->
+<meta property="og:type" content="website">
+<meta property="og:title" content="ВЕСТНИК — Новости">
+<meta property="og:description" content="Независимое издание. Мировые новости на русском языке.">
+<meta property="og:url" content="https://example.com">
+<meta property="og:image" content="https://example.com/og-image.jpg">
+<meta property="og:site_name" content="ВЕСТНИК">
+<meta property="og:locale" content="ru_RU">
+
+<!-- Twitter Card -->
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="ВЕСТНИК — Новости">
+<meta name="twitter:description" content="Независимое издание. Мировые новости на русском языке.">
+<meta name="twitter:image" content="https://example.com/twitter-image.jpg">
+
+<!-- Canonical URL -->
+<link rel="canonical" href="https://example.com">
+
+<!-- Favicon -->
+<link rel="icon" type="image/x-icon" href="favicon.ico">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+
+<!-- Preconnect для CDN -->
+<link rel="preconnect" href="https://cdnjs.cloudflare.com">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://cdnjs.cloudflare.com">
+
+<!-- Prefetch для next pages -->
+<link rel="prefetch" href="rubrics.html">
+<link rel="prefetch" href="trending.html">
+<link rel="prefetch" href="search.html">
+
+<!-- RSS Feed -->
+<link rel="alternate" type="application/rss+xml" title="ВЕСТНИК RSS" href="feed.xml">
+
+<!-- JSON-LD Schema для структурированных данных -->
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "NewsMediaOrganization",
+  "name": "ВЕСТНИК",
+  "url": "https://example.com",
+  "logo": "https://example.com/logo.png",
+  "description": "Независимое издание с мировыми новостями на русском языке",
+  "sameAs": [
+    "https://www.facebook.com/vestnikru",
+    "https://twitter.com/vestnikru",
+    "https://t.me/vestnikru"
+  ],
+  "contactPoint": {
+    "@type": "ContactPoint",
+    "contactType": "Editorial",
+    "email": "info@example.com"
+  }
+}
+</script>
+
+<!-- Performance optimizations -->
+<link rel="prefetch" href="styles.css">
+<link rel="prefetch" href="script.js">
+
+<!-- Security headers (для веб-сервера) -->
+<!-- 
+  Добавьте эти заголовки на уровне вашего веб-сервера:
+  
+  Content-Security-Policy: default-src 'self'; script-src 'self' cdnjs.cloudflare.com; style-src 'self' cdnjs.cloudflare.com fonts.googleapis.com; img-src 'self' data: https:; font-src 'self' fonts.gstatic.com cdnjs.cloudflare.com; connect-src 'self'
+  
+  X-Content-Type-Options: nosniff
+  X-Frame-Options: SAMEORIGIN
+  X-XSS-Protection: 1; mode=block
+  Referrer-Policy: strict-origin-when-cross-origin
+  Permissions-Policy: geolocation=(), microphone=(), camera=()
+-->
+
+<!-- Loading performance script -->
+<script>
+  // Минимальный скрипт для отслеживания производительности
+  if (window.performance && window.performance.timing) {
+    window.addEventListener('load', function() {
+      const loadTime = window.performance.timing.loadEventEnd - window.performance.timing.navigationStart;
+      console.log('Page load time:', loadTime + 'ms');
+      
+      // Отправить метрики на аналитику (если нужно)
+      if (navigator.sendBeacon) {
+        navigator.sendBeacon('/api/metrics', JSON.stringify({
+          loadTime: loadTime,
+          timestamp: new Date().toISOString()
+        }));
+      }
+    });
+  }
+</script>

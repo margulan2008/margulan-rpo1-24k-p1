@@ -1,0 +1,367 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ВЕСТНИК — {{ title }}</title>
+{% load static %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}">
+</head>
+<body>
+
+<div id="readingBar"></div>
+
+<div class="ticker-wrap">
+  <span class="ticker-inner">
+    <span class="ticker-item">Архив всех статей доступен в одном месте</span>
+    <span class="ticker-item">Улучшенный поиск с фильтрацией по датам</span>
+    <span class="ticker-item">Сохраняйте избранные статьи в избранное</span>
+  </span>
+</div>
+
+<header class="masthead">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-12 col-md-8">
+        <a href="{% url 'home_page' %}" class="masthead-title d-block">ВЕСТНИК</a>
+        <div class="masthead-sub">Независимое издание · Основано в 2024 · Мировые новости</div>
+      </div>
+      <div class="col-12 col-md-4 date-line mt-2 mt-md-0">
+        <div id="currentDate"></div>
+        <div>Выпуск №247</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <button class="mobile-nav-toggle" onclick="toggleNav()">
+      <span><i class="bi bi-list me-1"></i> Разделы</span>
+      <i class="bi bi-chevron-down" id="navChevron"></i>
+    </button>
+    <div class="nav-collapse" id="navCollapse">
+      <ul class="nav flex-wrap">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}">Главная</a></li>
+        <li class="nav-item"><a class="nav-link" href="rubrics.html">Рубрики</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'archive_page' %}">Архив</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'search_page' %}">Поиск</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about_page' %}">О нас</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'contacts_page' %}">Контакты</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container mt-4">
+  <div class="row">
+    <div class="col-lg-8">
+      <h1 class="mb-4">
+        <i class="bi bi-search me-2"></i>Поиск по сайту
+      </h1>
+
+      <div class="search-widget mb-4">
+        <div class="input-group input-group-lg">
+          <input type="text" class="form-control" id="searchQuery" placeholder="Введите запрос..." value=""/>
+          <button class="btn btn-primary" onclick="performSearch()">
+            <i class="bi bi-search me-1"></i>Найти
+          </button>
+        </div>
+        <div class="mt-3">
+          <label class="form-label">Фильтры:</label>
+          <div class="row">
+            <div class="col-md-6">
+              <select class="form-select" id="categoryFilter">
+                <option value="">Все рубрики</option>
+                <option value="politics">Политика</option>
+                <option value="economy">Экономика</option>
+                <option value="technology">Технологии</option>
+                <option value="science">Наука</option>
+                <option value="sports">Спорт</option>
+                <option value="culture">Культура</option>
+                <option value="world">Мир</option>
+              </select>
+            </div>
+            <div class="col-md-6">
+              <select class="form-select" id="sortFilter">
+                <option value="recent">По дате (новые)</option>
+                <option value="popular">По популярности</option>
+                <option value="relevance">По релевантности</option>
+              </select>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div id="searchResults" class="row">
+        <div class="col-12 text-center text-muted py-5">
+          <i class="bi bi-search fs-1 mb-3 d-block"></i>
+          Введите запрос для поиска
+        </div>
+      </div>
+
+      <nav class="mt-4" id="searchPagination"></nav>
+    </div>
+
+    <aside class="col-lg-4 sidebar">
+      <div class="sidebar-widget">
+        <h6><i class="bi bi-star me-2"></i>Популярные поиски</h6>
+        <div class="tag-cloud">
+          <span class="tag-item" onclick="searchTag('Путин')">Путин</span>
+          <span class="tag-item" onclick="searchTag('Выборы')">Выборы</span>
+          <span class="tag-item" onclick="searchTag('Экономика')">Экономика</span>
+          <span class="tag-item" onclick="searchTag('Спорт')">Спорт</span>
+          <span class="tag-item" onclick="searchTag('Технологии')">Технологии</span>
+          <span class="tag-item" onclick="searchTag('Наука')">Наука</span>
+          <span class="tag-item" onclick="searchTag('Климат')">Климат</span>
+          <span class="tag-item" onclick="searchTag('Космос')">Космос</span>
+        </div>
+      </div>
+
+      <div class="sidebar-widget">
+        <h6><i class="bi bi-bookmark me-2"></i>Недавние поиски</h6>
+        <ul class="list-unstyled small" id="recentSearches">
+          <li><a href="#" onclick="return false" class="text-decoration-none">Нет поисков</a></li>
+        </ul>
+      </div>
+
+      <div class="sidebar-widget bg-light">
+        <h6><i class="bi bi-info-circle me-2"></i>Советы поиска</h6>
+        <ul class="small">
+          <li>Используйте кавычки для точного совпадения: "Путин"</li>
+          <li>Минус исключает слово: -реклама</li>
+          <li>Символ * работает как подстановка</li>
+          <li>Ищите по датам: 2026-02</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h6>Разделы</h6>
+        <ul class="list-unstyled small">
+          <li><a href="rubrics.html">Рубрики</a></li>
+          <li><a href="{% url 'archive_page' %}">Архив</a></li>
+          <li><a href="{% url 'search_page' %}">Поиск</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6>Информация</h6>
+        <ul class="list-unstyled small">
+          <li><a href="{% url 'about_page' %}">О нас</a></li>
+          <li><a href="{% url 'contacts_page' %}">Контакты</a></li>
+          <li><a href="#">Реклама</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6>Следите за нами</h6>
+        <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="me-2"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="me-2"><i class="bi bi-telegram"></i></a>
+        <a href="#" class="me-2"><i class="bi bi-youtube"></i></a>
+      </div>
+      <div class="col-md-3">
+        <h6>Подписка</h6>
+        <div class="input-group input-group-sm">
+          <input type="email" class="form-control" placeholder="Email">
+          <button class="btn btn-primary btn-sm">Подписаться</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="text-center small text-muted">
+      <p>&copy; 2026 ВЕСТНИК. Все права защищены.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+// Данные для поиска (из основного script.js)
+const ARTICLES = [
+  {id:1, cat:'technology', title:'Квантовый компьютер IBM установил новый рекорд', lead:'Компания IBM представила своё последнее достижение', body:'IBM объявила о достижении нового уровня в квантовых вычислениях. Их новая система смогла обработать задачу за 2 часа, которая потребовала бы 10 000 лет классических компьютеров...', author:'Алексей Петров', date:'26 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%23667eea%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E', hero: true},
+  {id:2, cat:'politics', title:'Новые реформы в политике стран Европы', lead:'Европейские лидеры провели совещание', body:'Во время встречи обсуждались вопросы безопасности и экономического сотрудничества...', author:'Анна Смирнова', date:'25 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%23c0392b%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:3, cat:'economy', title:'Рост ВВП превысил прогнозы аналитиков', lead:'Экономика показала неожиданный рост', body:'Последние статистические данные показывают положительный тренд в развитии экономики...', author:'Иван Петренко', date:'24 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%23f39c12%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:4, cat:'sports', title:'Чемпионат мира: новые рекорды установлены', lead:'Спортивные достижения достигли нового уровня', body:'Во время чемпионата мировых рекордсмены показали впечатляющие результаты...', author:'Дмитрий Соколов', date:'23 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%2327ae60%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:5, cat:'science', title:'Учёные выявили новые свойства воды', lead:'Революционное открытие в физике', body:'Исследователи из MIT обнаружили ранее неизвестные квантовые свойства воды...', author:'Елена Добрякова', date:'22 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%239b59b6%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:6, cat:'culture', title:'Новая выставка в Лувре привлекает толпы', lead:'Искусство притягивает миллионы посетителей', body:'Экспозиция современного искусства в Лувре установила рекорд посещаемости...', author:'Мария Петрова', date:'21 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%23e74c3c%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:7, cat:'world', title:'Климатический саммит принял новые решения', lead:'Глобальная инициатива по климату', body:'На всемирной встрече были приняты амбициозные цели по снижению выбросов углерода...', author:'Александр Волков', date:'20 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%2316a085%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:8, cat:'technology', title:'ChatGPT 5 представлена с новыми возможностями', lead:'ИИ достигает нового уровня', body:'OpenAI представила пятую версию своего языковой модели с поддержкой видео и голоса...', author:'Юрий Макаров', date:'19 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%234a90e2%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:9, cat:'politics', title:'Парламент принял новый закон о культуре', lead:'Культурное наследие защищено законом', body:'Новое законодательство обеспечит дополнительные гарантии для культурного наследия страны...', author:'Софья Константинова', date:'18 февраля 2026', img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%2334495e%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'}
+];
+
+let currentPage = 1;
+let searchResults = [];
+
+// Функция поиска
+function performSearch() {
+  const query = document.getElementById('searchQuery').value.toLowerCase();
+  const category = document.getElementById('categoryFilter').value;
+  const sort = document.getElementById('sortFilter').value;
+
+  if (!query.trim()) {
+    alert('Пожалуйста, введите запрос');
+    return;
+  }
+
+  // Сохранить поиск
+  saveRecentSearch(query);
+
+  // Фильтровать результаты
+  searchResults = ARTICLES.filter(article => {
+    const matchesQuery = 
+      article.title.toLowerCase().includes(query) ||
+      article.lead.toLowerCase().includes(query) ||
+      article.body.toLowerCase().includes(query) ||
+      article.author.toLowerCase().includes(query);
+    
+    const matchesCategory = !category || article.cat === category;
+    
+    return matchesQuery && matchesCategory;
+  });
+
+  // Сортировать
+  if (sort === 'popular') {
+    searchResults.sort((a, b) => (b.id || 0) - (a.id || 0));
+  } else if (sort === 'relevance') {
+    const queryWords = query.split(' ');
+    searchResults.sort((a, b) => {
+      const aMatches = queryWords.filter(w => a.title.toLowerCase().includes(w)).length;
+      const bMatches = queryWords.filter(w => b.title.toLowerCase().includes(w)).length;
+      return bMatches - aMatches;
+    });
+  }
+
+  currentPage = 1;
+  renderSearchResults();
+}
+
+function renderSearchResults() {
+  const resultsDiv = document.getElementById('searchResults');
+  const itemsPerPage = 6;
+  const start = (currentPage - 1) * itemsPerPage;
+  const paginatedResults = searchResults.slice(start, start + itemsPerPage);
+
+  if (paginatedResults.length === 0) {
+    resultsDiv.innerHTML = `
+      <div class="col-12 text-center text-muted py-5">
+        <i class="bi bi-exclamation-circle fs-1 mb-3 d-block"></i>
+        <p>Результатов не найдено: "${document.getElementById('searchQuery').value}"</p>
+        <p class="small">Попробуйте другой поисковый запрос</p>
+      </div>
+    `;
+    document.getElementById('searchPagination').innerHTML = '';
+    return;
+  }
+
+  resultsDiv.innerHTML = paginatedResults.map(article => `
+    <div class="col-md-6 mb-4">
+      <div class="news-card">
+        <img src="${article.img}" alt="${article.title}" class="news-card-img">
+        <div class="news-card-body">
+          <span class="news-cat">${article.cat}</span>
+          <h5 class="news-card-title">${article.title}</h5>
+          <p class="news-card-lead">${article.lead}</p>
+          <div class="news-card-meta">
+            <span><i class="bi bi-calendar"></i> ${article.date}</span>
+            <span><i class="bi bi-person"></i> <a href="author.html" class="text-decoration-none">${article.author}</a></span>
+          </div>
+          <button class="btn btn-sm btn-outline-primary mt-2" onclick="addToFavorites(${article.id})">
+            <i class="bi bi-bookmark me-1"></i>Избранное
+          </button>
+        </div>
+      </div>
+    </div>
+  `).join('');
+
+  // Пагинация
+  const totalPages = Math.ceil(searchResults.length / itemsPerPage);
+  let paginationHTML = '<ul class="pagination justify-content-center">';
+  
+  for (let i = 1; i <= totalPages; i++) {
+    paginationHTML += `
+      <li class="page-item ${i === currentPage ? 'active' : ''}">
+        <button class="page-link" onclick="goToPage(${i})">${i}</button>
+      </li>
+    `;
+  }
+  
+  paginationHTML += '</ul>';
+  document.getElementById('searchPagination').innerHTML = paginationHTML;
+}
+
+function goToPage(page) {
+  currentPage = page;
+  renderSearchResults();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function searchTag(tag) {
+  document.getElementById('searchQuery').value = tag;
+  performSearch();
+}
+
+function saveRecentSearch(query) {
+  let recent = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+  recent = recent.filter(s => s !== query);
+  recent.unshift(query);
+  recent = recent.slice(0, 5);
+  localStorage.setItem('recentSearches', JSON.stringify(recent));
+  renderRecentSearches();
+}
+
+function renderRecentSearches() {
+  const recent = JSON.parse(localStorage.getItem('recentSearches') || '[]');
+  const container = document.getElementById('recentSearches');
+  
+  if (recent.length === 0) {
+    container.innerHTML = '<li><a href="#" onclick="return false" class="text-decoration-none">Нет поисков</a></li>';
+    return;
+  }
+  
+  container.innerHTML = recent.map(search => `
+    <li class="mb-2">
+      <a href="#" onclick="document.getElementById('searchQuery').value='${search}'; performSearch(); return false;" class="text-decoration-none">
+        <i class="bi bi-search me-1"></i>${search}
+      </a>
+    </li>
+  `).join('');
+}
+
+function addToFavorites(articleId) {
+  let favorites = JSON.parse(localStorage.getItem('favorites') || '[]');
+  if (!favorites.includes(articleId)) {
+    favorites.push(articleId);
+    localStorage.setItem('favorites', JSON.stringify(favorites));
+    alert('Статья добавлена в избранное!');
+  } else {
+    alert('Статья уже в избранном');
+  }
+}
+
+function toggleNav() {
+  const navCollapse = document.getElementById('navCollapse');
+  const chevron = document.getElementById('navChevron');
+  navCollapse.classList.toggle('show');
+  chevron.classList.toggle('rotate');
+}
+
+// Инициализация даты
+function setDate() {
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const today = new Date().toLocaleDateString('ru-RU', options);
+  document.getElementById('currentDate').textContent = today.charAt(0).toUpperCase() + today.slice(1);
+}
+
+setDate();
+renderRecentSearches();
+</script>
+</body>
+</html>

@@ -1,0 +1,448 @@
+nohup: ignoring input
+Watching for file changes with StatReloader
+[28/Feb/2026 20:23:40] "HEAD / HTTP/1.1" 200 0
+[28/Feb/2026 20:40:05] "GET /static/css/styles.css HTTP/1.1" 200 27577
+[28/Feb/2026 20:43:18] "GET /news/read/4/ HTTP/1.1" 200 4498
+[28/Feb/2026 20:43:18] "GET /static/css/styles.css HTTP/1.1" 200 27577
+Not Found: /news/read/4/service-worker.js
+[28/Feb/2026 20:43:18] "GET /news/read/4/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 20:43:22] "GET /news/all/ HTTP/1.1" 200 5433
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 20:43:22] "GET /news/all/service-worker.js HTTP/1.1" 404 3885
+[28/Feb/2026 20:43:26] "GET /news/categories/3/ HTTP/1.1" 200 4054
+Not Found: /news/categories/3/service-worker.js
+[28/Feb/2026 20:43:26] "GET /news/categories/3/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 20:43:33] "GET / HTTP/1.1" 200 10460
+Not Found: /service-worker.js
+[28/Feb/2026 20:43:33] "GET /service-worker.js HTTP/1.1" 404 3858
+[28/Feb/2026 20:43:38] "GET /news/read/4/ HTTP/1.1" 200 4498
+Not Found: /news/read/4/service-worker.js
+[28/Feb/2026 20:43:38] "GET /news/read/4/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 20:48:46] "GET /news/read/4/ HTTP/1.1" 200 5650
+[28/Feb/2026 20:48:46] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /news/read/4/service-worker.js
+[28/Feb/2026 20:48:46] "GET /news/read/4/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 20:48:49] "GET /news/all/ HTTP/1.1" 200 6585
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 20:48:49] "GET /news/all/service-worker.js HTTP/1.1" 404 3885
+[28/Feb/2026 20:48:51] "GET /news/read/2/ HTTP/1.1" 200 5369
+Not Found: /news/read/2/service-worker.js
+[28/Feb/2026 20:48:52] "GET /news/read/2/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 20:48:55] "GET /news/categories/3/ HTTP/1.1" 200 5206
+Not Found: /news/categories/3/service-worker.js
+[28/Feb/2026 20:48:55] "GET /news/categories/3/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 20:51:23] "GET /news/categories/3/ HTTP/1.1" 200 7952
+[28/Feb/2026 20:51:23] "GET /static/css/styles.css HTTP/1.1" 200 28484
+Not Found: /news/categories/3/service-worker.js
+[28/Feb/2026 20:51:23] "GET /news/categories/3/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 20:53:59] "GET /news/categories/3/ HTTP/1.1" 200 7952
+[28/Feb/2026 20:53:59] "GET /static/css/styles.css HTTP/1.1" 200 29797
+Not Found: /news/categories/3/service-worker.js
+[28/Feb/2026 20:53:59] "GET /news/categories/3/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 20:54:01] "GET /news/read/3/ HTTP/1.1" 200 8527
+[28/Feb/2026 20:54:01] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 20:54:01] "GET /news/read/3/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 20:54:10] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 20:54:10] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 20:54:29] "GET / HTTP/1.1" 200 14881
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 20:54:29] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 20:54:29] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /service-worker.js
+[28/Feb/2026 20:54:29] "GET /service-worker.js HTTP/1.1" 404 3858
+[28/Feb/2026 20:54:52] "GET /news/read/3/ HTTP/1.1" 200 8527
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 20:54:52] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 20:54:52] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 20:54:52] "GET /news/read/3/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 20:59:16] "GET /news/read/3/ HTTP/1.1" 200 8527
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 20:59:16] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 20:59:16] "GET /static/css/styles.css HTTP/1.1" 200 32974
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 20:59:16] "GET /news/read/3/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 20:59:24] "GET / HTTP/1.1" 200 14881
+[28/Feb/2026 20:59:24] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 20:59:24] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+Not Found: /service-worker.js
+[28/Feb/2026 20:59:24] "GET /service-worker.js HTTP/1.1" 404 3858
+[28/Feb/2026 20:59:25] "GET /news/categories/1/ HTTP/1.1" 200 7844
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 20:59:25] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+Not Found: /news/categories/1/service-worker.js
+[28/Feb/2026 20:59:26] "GET /news/categories/1/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 20:59:29] "GET /news/read/1/ HTTP/1.1" 200 8183
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 20:59:29] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 20:59:29] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /news/read/1/service-worker.js
+[28/Feb/2026 20:59:29] "GET /news/read/1/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 21:03:55] "GET /news/read/1/ HTTP/1.1" 200 8183
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:03:55] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:03:55] "GET /static/css/styles.css HTTP/1.1" 200 34711
+Not Found: /news/read/1/service-worker.js
+[28/Feb/2026 21:03:55] "GET /news/read/1/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 21:04:05] "GET /news/all/ HTTP/1.1" 200 9331
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:04:06] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:04:06] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 21:04:06] "GET /news/all/service-worker.js HTTP/1.1" 404 3885
+[28/Feb/2026 21:04:12] "GET /news/read/3/ HTTP/1.1" 200 8527
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:04:12] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:04:12] "GET /static/css/styles.css HTTP/1.1" 304 0
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 21:04:12] "GET /news/read/3/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 21:11:00] "GET /news/read/3/ HTTP/1.1" 200 8539
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:11:00] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:11:00] "GET /static/css/styles.css?v=3 HTTP/1.1" 200 34711
+[28/Feb/2026 21:11:00] "GET /static/js/script.js?v=3 HTTP/1.1" 200 29922
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 21:11:00] "GET /news/read/3/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 21:13:24] "GET /news/read/3/ HTTP/1.1" 200 8539
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:13:24] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:13:24] "GET /static/js/script.js?v=3 HTTP/1.1" 304 0
+[28/Feb/2026 21:13:24] "GET /static/css/styles.css?v=3 HTTP/1.1" 200 36866
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 21:13:24] "GET /news/read/3/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 21:13:33] "GET /news/all/ HTTP/1.1" 200 9343
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:13:33] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+[28/Feb/2026 21:13:33] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 21:13:33] "GET /news/all/service-worker.js HTTP/1.1" 404 3885
+[28/Feb/2026 21:13:48] "GET /news/read/1/ HTTP/1.1" 200 8195
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:13:48] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:13:48] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /news/read/1/service-worker.js
+[28/Feb/2026 21:13:48] "GET /news/read/1/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 21:15:15] "GET /news/categories/2/ HTTP/1.1" 200 8384
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:15:15] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:15:15] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+[28/Feb/2026 21:15:15] "GET /static/js/script.js?v=3 HTTP/1.1" 304 0
+Not Found: /news/categories/2/service-worker.js
+[28/Feb/2026 21:15:15] "GET /news/categories/2/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 21:15:24] "GET /news/all/ HTTP/1.1" 200 9343
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:15:24] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 21:15:24] "GET /news/all/service-worker.js HTTP/1.1" 404 3885
+[28/Feb/2026 21:15:41] "GET /news/read/4/ HTTP/1.1" 200 8408
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:15:41] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:15:41] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /news/read/4/service-worker.js
+[28/Feb/2026 21:15:41] "GET /news/read/4/service-worker.js HTTP/1.1" 404 3894
+Internal Server Error: /
+Traceback (most recent call last):
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 577, in parse
+    compile_func = self.tags[command]
+                   ~~~~~~~~~^^^^^^^^^
+KeyError: 'static'
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/core/handlers/exception.py", line 55, in inner
+    response = get_response(request)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/core/handlers/base.py", line 198, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_app/views.py", line 28, in home_page
+    return render(request, "index.html", context)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/shortcuts.py", line 25, in render
+    content = loader.render_to_string(template_name, context, request, using=using)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/loader.py", line 61, in render_to_string
+    template = get_template(template_name, using=using)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/loader.py", line 15, in get_template
+    return engine.get_template(template_name)
+           ~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/backends/django.py", line 79, in get_template
+    return Template(self.engine.get_template(template_name), self)
+                    ~~~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/engine.py", line 186, in get_template
+    template, origin = self.find_template(template_name)
+                       ~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/engine.py", line 159, in find_template
+    template = loader.get_template(name, skip=skip)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/loaders/cached.py", line 57, in get_template
+    template = super().get_template(template_name, skip)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/loaders/base.py", line 28, in get_template
+    return Template(
+        contents,
+    ...<2 lines>...
+        self.engine,
+    )
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 157, in __init__
+    self.nodelist = self.compile_nodelist()
+                    ~~~~~~~~~~~~~~~~~~~~~^^
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 199, in compile_nodelist
+    nodelist = parser.parse()
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/loader_tags.py", line 307, in do_extends
+    nodelist = parser.parse()
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/loader_tags.py", line 235, in do_block
+    nodelist = parser.parse(("endblock",))
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 585, in parse
+    raise self.error(token, e)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 583, in parse
+    compiled_result = compile_func(self, token)
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/defaulttags.py", line 894, in do_for
+    nodelist_loop = parser.parse(
+        (
+    ...<2 lines>...
+        )
+    )
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 579, in parse
+    self.invalid_block_tag(token, command, parse_until)
+    ~~~~~~~~~~~~~~~~~~~~~~^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/margulan-stein/.local/lib/python3.14/site-packages/django/template/base.py", line 634, in invalid_block_tag
+    raise self.error(
+    ...<8 lines>...
+    )
+django.template.exceptions.TemplateSyntaxError: Template: /home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_app/templates/index.html, Invalid block tag on line 71: 'static', expected 'empty' or 'endfor'. Did you forget to register or load this tag?
+[28/Feb/2026 21:15:45] "GET / HTTP/1.1" 500 251204
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:15:45] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:18:19] "GET / HTTP/1.1" 200 18262
+[28/Feb/2026 21:18:19] "GET /static/img/user.svg HTTP/1.1" 404 1850
+[28/Feb/2026 21:18:19] "GET /static/js/script.js?v=3 HTTP/1.1" 304 0
+[28/Feb/2026 21:18:19] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /service-worker.js
+[28/Feb/2026 21:18:19] "GET /service-worker.js HTTP/1.1" 404 3858
+[28/Feb/2026 21:27:18] "GET / HTTP/1.1" 200 18262
+[28/Feb/2026 21:27:18] "GET /static/img/user.svg HTTP/1.1" 404 1850
+[28/Feb/2026 21:27:18] "GET /static/js/script.js?v=3 HTTP/1.1" 304 0
+[28/Feb/2026 21:27:18] "GET /static/css/styles.css?v=3 HTTP/1.1" 200 38278
+Not Found: /service-worker.js
+[28/Feb/2026 21:27:18] "GET /service-worker.js HTTP/1.1" 404 3858
+[28/Feb/2026 21:27:29] "GET /news/all/ HTTP/1.1" 200 9343
+[28/Feb/2026 21:27:29] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 21:27:29] "GET /news/all/service-worker.js HTTP/1.1" 404 3885
+[28/Feb/2026 21:27:30] "GET /news/categories/1/ HTTP/1.1" 200 7856
+Not Found: /news/categories/1/service-worker.js
+[28/Feb/2026 21:27:31] "GET /news/categories/1/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 21:27:40] "GET /news/categories/1/ HTTP/1.1" 200 7856
+[28/Feb/2026 21:27:40] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /news/categories/1/service-worker.js
+[28/Feb/2026 21:27:40] "GET /news/categories/1/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 21:27:41] "GET /news/read/1/ HTTP/1.1" 200 8195
+Not Found: /news/read/1/service-worker.js
+[28/Feb/2026 21:27:42] "GET /news/read/1/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 21:27:45] "GET / HTTP/1.1" 200 18262
+[28/Feb/2026 21:27:45] "GET /static/img/user.svg HTTP/1.1" 404 1850
+[28/Feb/2026 21:27:45] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /service-worker.js
+[28/Feb/2026 21:27:45] "GET /service-worker.js HTTP/1.1" 404 3858
+[28/Feb/2026 21:27:51] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:27:51] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:28:05] "GET /news/categories/3/ HTTP/1.1" 200 7964
+[28/Feb/2026 21:28:05] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /news/categories/3/service-worker.js
+[28/Feb/2026 21:28:05] "GET /news/categories/3/service-worker.js HTTP/1.1" 404 3912
+[28/Feb/2026 21:28:11] "GET / HTTP/1.1" 200 18262
+[28/Feb/2026 21:28:11] "GET /static/img/user.svg HTTP/1.1" 404 1850
+Not Found: /service-worker.js
+[28/Feb/2026 21:28:11] "GET /service-worker.js HTTP/1.1" 404 3858
+[28/Feb/2026 21:28:46] "GET /news/read/3/ HTTP/1.1" 200 8539
+[28/Feb/2026 21:28:46] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 21:28:46] "GET /news/read/3/service-worker.js HTTP/1.1" 404 3894
+[28/Feb/2026 21:37:48] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:37:48] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:39:06] "GET /news/all/ HTTP/1.1" 200 9343
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:39:06] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:39:06] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+[28/Feb/2026 21:39:06] "GET /static/js/script.js?v=3 HTTP/1.1" 304 0
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 21:39:06] "GET /news/all/service-worker.js HTTP/1.1" 404 3885
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:39:12] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:39:12] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:45:41] "GET /news/read/3/ HTTP/1.1" 200 8539
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 21:45:41] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 3951
+[28/Feb/2026 21:45:41] "GET /static/js/script.js?v=3 HTTP/1.1" 304 0
+[28/Feb/2026 21:45:41] "GET /static/css/styles.css?v=3 HTTP/1.1" 200 40826
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 21:45:41] "GET /news/read/3/service-worker.js HTTP/1.1" 404 3894
+/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_app/models.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 28, 2026 - 20:23:33
+Django version 6.0.2, using settings 'news_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_app/admin.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 28, 2026 - 21:58:52
+Django version 6.0.2, using settings 'news_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_project/settings.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 28, 2026 - 21:59:04
+Django version 6.0.2, using settings 'news_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_project/urls.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 28, 2026 - 21:59:24
+Django version 6.0.2, using settings 'news_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_app/models.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 28, 2026 - 21:59:34
+Django version 6.0.2, using settings 'news_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+[28/Feb/2026 22:01:21] "GET /news/read/3/ HTTP/1.1" 200 8539
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 22:01:21] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4120
+[28/Feb/2026 22:01:21] "GET /static/js/script.js?v=3 HTTP/1.1" 304 0
+[28/Feb/2026 22:01:21] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 22:01:21] "GET /news/read/3/service-worker.js HTTP/1.1" 404 4063
+[28/Feb/2026 22:01:28] "GET / HTTP/1.1" 200 18271
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 22:01:28] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4120
+[28/Feb/2026 22:01:28] "GET /static/img/user.svg HTTP/1.1" 404 1850
+Not Found: /service-worker.js
+[28/Feb/2026 22:01:29] "GET /service-worker.js HTTP/1.1" 404 4027
+[28/Feb/2026 22:01:32] "GET /news/categories/1/ HTTP/1.1" 200 7856
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 22:01:32] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4120
+Not Found: /news/categories/1/service-worker.js
+[28/Feb/2026 22:01:32] "GET /news/categories/1/service-worker.js HTTP/1.1" 404 4081
+[28/Feb/2026 22:01:37] "GET / HTTP/1.1" 200 18271
+Not Found: /.well-known/appspecific/com.chrome.devtools.json
+[28/Feb/2026 22:01:37] "GET /.well-known/appspecific/com.chrome.devtools.json HTTP/1.1" 404 4120
+[28/Feb/2026 22:01:37] "GET /static/img/user.svg HTTP/1.1" 404 1850
+Not Found: /service-worker.js
+[28/Feb/2026 22:01:37] "GET /service-worker.js HTTP/1.1" 404 4027
+[28/Feb/2026 22:02:05] "GET / HTTP/1.1" 200 18271
+[28/Feb/2026 22:02:05] "GET /static/img/user.svg HTTP/1.1" 404 1850
+Not Found: /service-worker.js
+[28/Feb/2026 22:02:05] "GET /service-worker.js HTTP/1.1" 404 4027
+[28/Feb/2026 22:02:07] "GET /news/all/ HTTP/1.1" 200 9343
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 22:02:07] "GET /news/all/service-worker.js HTTP/1.1" 404 4054
+[28/Feb/2026 22:02:11] "GET /news/categories/1/ HTTP/1.1" 200 7856
+Not Found: /news/categories/1/service-worker.js
+[28/Feb/2026 22:02:11] "GET /news/categories/1/service-worker.js HTTP/1.1" 404 4081
+[28/Feb/2026 22:02:13] "GET /news/read/1/ HTTP/1.1" 200 8195
+Not Found: /news/read/1/service-worker.js
+[28/Feb/2026 22:02:14] "GET /news/read/1/service-worker.js HTTP/1.1" 404 4063
+[28/Feb/2026 22:02:16] "GET /news/all/ HTTP/1.1" 200 9343
+Not Found: /news/all/service-worker.js
+[28/Feb/2026 22:02:17] "GET /news/all/service-worker.js HTTP/1.1" 404 4054
+[28/Feb/2026 22:02:20] "GET /news/read/3/ HTTP/1.1" 200 8539
+Not Found: /news/read/3/service-worker.js
+[28/Feb/2026 22:02:20] "GET /news/read/3/service-worker.js HTTP/1.1" 404 4063
+[28/Feb/2026 22:02:22] "GET / HTTP/1.1" 200 18271
+[28/Feb/2026 22:02:23] "GET /static/img/user.svg HTTP/1.1" 404 1850
+Not Found: /service-worker.js
+[28/Feb/2026 22:02:23] "GET /service-worker.js HTTP/1.1" 404 4027
+[28/Feb/2026 22:02:28] "GET /news/read/4/ HTTP/1.1" 200 8408
+Not Found: /news/read/4/service-worker.js
+[28/Feb/2026 22:02:28] "GET /news/read/4/service-worker.js HTTP/1.1" 404 4063
+[28/Feb/2026 22:02:36] "GET /news/categories/1/ HTTP/1.1" 200 7856
+Not Found: /news/categories/1/service-worker.js
+[28/Feb/2026 22:02:36] "GET /news/categories/1/service-worker.js HTTP/1.1" 404 4081
+[28/Feb/2026 22:02:41] "GET /news/categories/3/ HTTP/1.1" 200 7964
+Not Found: /news/categories/3/service-worker.js
+[28/Feb/2026 22:02:41] "GET /news/categories/3/service-worker.js HTTP/1.1" 404 4081
+[28/Feb/2026 22:03:44] "GET /news/categories/3/ HTTP/1.1" 200 7964
+[28/Feb/2026 22:03:44] "GET /static/css/styles.css?v=3 HTTP/1.1" 304 0
+Not Found: /news/categories/3/service-worker.js
+[28/Feb/2026 22:03:44] "GET /news/categories/3/service-worker.js HTTP/1.1" 404 4081
+[28/Feb/2026 22:03:47] "GET /news/categories/1/ HTTP/1.1" 200 7856
+Not Found: /news/categories/1/service-worker.js
+[28/Feb/2026 22:03:47] "GET /news/categories/1/service-worker.js HTTP/1.1" 404 4081
+/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_app/models.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 28, 2026 - 22:01:12
+Django version 6.0.2, using settings 'news_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_app/admin.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 28, 2026 - 22:05:21
+Django version 6.0.2, using settings 'news_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader
+/home/margulan-stein/Desktop/rpo2-qaznews-project-main/news_app/admin.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+February 28, 2026 - 22:05:36
+Django version 6.0.2, using settings 'news_project.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+
+WARNING: This is a development server. Do not use it in a production setting. Use a production WSGI or ASGI server instead.
+For more information on production servers see: https://docs.djangoproject.com/en/6.0/howto/deployment/
+Watching for file changes with StatReloader

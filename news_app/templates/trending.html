@@ -1,0 +1,388 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Топ недели — ВЕСТНИК</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+{% load static %}
+<link rel="stylesheet" href="styles.css">
+<style>
+.top-article-card {
+  background: linear-gradient(135deg, var(--gold) 0%, var(--paper) 100%);
+  border: 2px solid var(--gold);
+  padding: 20px;
+  margin-bottom: 20px;
+  position: relative;
+  overflow: hidden;
+}
+
+.top-article-card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 80px;
+  height: 80px;
+  background: radial-gradient(circle, rgba(184,134,11,0.3) 0%, transparent 70%);
+  border-radius: 50%;
+}
+
+.medal-badge {
+  display: inline-block;
+  width: 50px;
+  height: 50px;
+  line-height: 50px;
+  text-align: center;
+  border-radius: 50%;
+  font-size: 24px;
+  font-weight: bold;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+
+.medal-gold {
+  background: #FFD700;
+  color: white;
+  box-shadow: 0 4px 8px rgba(255, 215, 0, 0.3);
+}
+
+.medal-silver {
+  background: #C0C0C0;
+  color: white;
+  box-shadow: 0 4px 8px rgba(192, 192, 192, 0.3);
+}
+
+.medal-bronze {
+  background: #CD7F32;
+  color: white;
+  box-shadow: 0 4px 8px rgba(205, 127, 50, 0.3);
+}
+
+.trending-number {
+  font-size: 32px;
+  font-weight: bold;
+  color: var(--gold);
+  margin-right: 15px;
+}
+
+.views-counter {
+  background: rgba(0,0,0,0.05);
+  padding: 8px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+}
+
+.chart-container {
+  margin-top: 30px;
+}
+
+.bar-chart {
+  display: flex;
+  align-items: flex-end;
+  gap: 15px;
+  height: 300px;
+}
+
+.bar-item {
+  flex: 1;
+  background: linear-gradient(180deg, var(--gold) 0%, var(--red) 100%);
+  border-radius: 4px 4px 0 0;
+  position: relative;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+
+.bar-item:hover {
+  opacity: 0.8;
+  transform: translateY(-5px);
+}
+
+.bar-label {
+  text-align: center;
+  margin-top: 10px;
+  font-size: 12px;
+  color: var(--muted);
+}
+</style>
+</head>
+<body>
+
+<div id="readingBar"></div>
+
+<header class="masthead">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-12 col-md-8">
+        <a href="{% url 'home_page' %}" class="masthead-title d-block">ВЕСТНИК</a>
+        <div class="masthead-sub">Независимое издание · Основано в 2024 · Мировые новости</div>
+      </div>
+      <div class="col-12 col-md-4 date-line mt-2 mt-md-0">
+        <div id="currentDate"></div>
+        <div>Выпуск №247</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <button class="mobile-nav-toggle" onclick="toggleNav()">
+      <span><i class="bi bi-list me-1"></i> Разделы</span>
+      <i class="bi bi-chevron-down" id="navChevron"></i>
+    </button>
+    <div class="nav-collapse" id="navCollapse">
+      <ul class="nav flex-wrap">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}">Главная</a></li>
+        <li class="nav-item"><a class="nav-link" href="rubrics.html">Рубрики</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'archive_page' %}">Архив</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'trending_page' %}">Топ недели</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'search_page' %}">Поиск</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about_page' %}">О нас</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'contacts_page' %}">Контакты</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<main class="container mt-4">
+  <div class="row">
+    <div class="col-lg-8">
+      <h1 class="mb-4">
+        <i class="bi bi-fire me-2" style="color: var(--red);"></i>Топ недели
+      </h1>
+
+      <div class="alert alert-warning" role="alert">
+        <i class="bi bi-graph-up me-2"></i>
+        <strong>Самые читаемые статьи</strong> на портале ВЕСТНИК за последние 7 дней
+      </div>
+
+      <div id="topArticles"></div>
+
+      <div class="chart-container">
+        <h5 class="mb-3">Динамика популярности по рубрикам</h5>
+        <div class="bar-chart" id="categoryChart"></div>
+      </div>
+    </div>
+
+    <aside class="col-lg-4 sidebar">
+      <div class="sidebar-widget">
+        <h6><i class="bi bi-fire me-2" style="color: var(--red);"></i>Статистика</h6>
+        <div class="mb-3">
+          <div class="small text-muted">Просмотры за неделю</div>
+          <div class="h5 mb-0" id="totalViews">-</div>
+        </div>
+        <div class="mb-3">
+          <div class="small text-muted">Новых статей</div>
+          <div class="h5 mb-0" id="newArticles">-</div>
+        </div>
+        <div>
+          <div class="small text-muted">Топ автор</div>
+          <div class="h5 mb-0" id="topAuthor">-</div>
+        </div>
+      </div>
+
+      <div class="sidebar-widget">
+        <h6><i class="bi bi-calendar-week me-2"></i>Периоды</h6>
+        <button class="btn btn-sm btn-primary w-100 mb-2 active" onclick="setTimePeriod('week')">
+          <i class="bi bi-calendar-week me-1"></i>Эта неделя
+        </button>
+        <button class="btn btn-sm btn-outline-primary w-100 mb-2" onclick="setTimePeriod('month')">
+          <i class="bi bi-calendar-month me-1"></i>Этот месяц
+        </button>
+        <button class="btn btn-sm btn-outline-primary w-100" onclick="setTimePeriod('year')">
+          <i class="bi bi-calendar me-1"></i>Этот год
+        </button>
+      </div>
+
+      <div class="sidebar-widget">
+        <h6><i class="bi bi-bookmark me-2"></i>Топ авторов</h6>
+        <ul class="list-unstyled small" id="topAuthors"></ul>
+      </div>
+    </aside>
+  </div>
+</main>
+
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3">
+        <h6>Разделы</h6>
+        <ul class="list-unstyled small">
+          <li><a href="rubrics.html">Рубрики</a></li>
+          <li><a href="{% url 'archive_page' %}">Архив</a></li>
+          <li><a href="{% url 'trending_page' %}">Топ недели</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6>Информация</h6>
+        <ul class="list-unstyled small">
+          <li><a href="{% url 'about_page' %}">О нас</a></li>
+          <li><a href="{% url 'contacts_page' %}">Контакты</a></li>
+          <li><a href="#">Реклама</a></li>
+        </ul>
+      </div>
+      <div class="col-md-3">
+        <h6>Следите за нами</h6>
+        <a href="#" class="me-2"><i class="bi bi-facebook"></i></a>
+        <a href="#" class="me-2"><i class="bi bi-twitter"></i></a>
+        <a href="#" class="me-2"><i class="bi bi-telegram"></i></a>
+        <a href="#" class="me-2"><i class="bi bi-youtube"></i></a>
+      </div>
+      <div class="col-md-3">
+        <h6>Подписка</h6>
+        <div class="input-group input-group-sm">
+          <input type="email" class="form-control" placeholder="Email">
+          <button class="btn btn-primary btn-sm">Подписаться</button>
+        </div>
+      </div>
+    </div>
+    <hr>
+    <div class="text-center small text-muted">
+      <p>&copy; 2026 ВЕСТНИК. Все права защищены.</p>
+    </div>
+  </div>
+</footer>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+// Данные статей с просмотрами
+const ARTICLES = [
+  {id:1, cat:'technology', title:'Квантовый компьютер IBM установил новый рекорд', lead:'Компания IBM представила своё последнее достижение', body:'IBM объявила о достижении нового уровня в квантовых вычислениях...', author:'Алексей Петров', date:'26 февраля 2026', views: 15420, img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%23667eea%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:2, cat:'politics', title:'Новые реформы в политике стран Европы', lead:'Европейские лидеры провели совещание', body:'Во время встречи обсуждались вопросы безопасности...', author:'Анна Смирнова', date:'25 февраля 2026', views: 12850, img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%23c0392b%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:3, cat:'economy', title:'Рост ВВП превысил прогнозы аналитиков', lead:'Экономика показала неожиданный рост', body:'Последние статистические данные показывают положительный тренд...', author:'Иван Петренко', date:'24 февраля 2026', views: 10320, img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%23f39c12%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:4, cat:'sports', title:'Чемпионат мира: новые рекорды установлены', lead:'Спортивные достижения достигли нового уровня', body:'Во время чемпионата мировые рекордсмены показали впечатляющие результаты...', author:'Дмитрий Соколов', date:'23 февраля 2026', views: 9750, img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%2327ae60%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+  {id:5, cat:'science', title:'Учёные выявили новые свойства воды', lead:'Революционное открытие в физике', body:'Исследователи из MIT обнаружили ранее неизвестные квантовые свойства воды...', author:'Елена Добрякова', date:'22 февраля 2026', views: 8630, img:'data:image/svg+xml,%3Csvg xmlns=%22http://www.w3.org/2000/svg%22 width=%22400%22 height=%22250%22%3E%3Crect fill=%22%239b59b6%22 width=%22400%22 height=%22250%22/%3E%3C/svg%3E'},
+];
+
+function loadTopArticles() {
+  const sorted = [...ARTICLES].sort((a, b) => b.views - a.views);
+  const container = document.getElementById('topArticles');
+  
+  container.innerHTML = sorted.map((article, idx) => {
+    let medal = '';
+    let medalClass = '';
+    
+    if (idx === 0) {
+      medal = '🥇';
+      medalClass = 'medal-gold';
+    } else if (idx === 1) {
+      medal = '🥈';
+      medalClass = 'medal-silver';
+    } else if (idx === 2) {
+      medal = '🥉';
+      medalClass = 'medal-bronze';
+    }
+    
+    return `
+      <div class="top-article-card">
+        <div class="row align-items-center">
+          <div class="col-auto">
+            <div class="medal-badge ${medalClass}">${medal}</div>
+          </div>
+          <div class="col">
+            <h5 class="mb-2">${article.title}</h5>
+            <div class="small text-muted mb-2">
+              <span><i class="bi bi-calendar"></i> ${article.date}</span> | 
+              <span><i class="bi bi-person"></i> ${article.author}</span>
+            </div>
+            <p class="mb-2">${article.lead}</p>
+            <div class="views-counter">
+              <i class="bi bi-eye me-1"></i>${article.views.toLocaleString()} просмотров
+            </div>
+          </div>
+          <div class="col-auto">
+            <button class="btn btn-primary" onclick="viewArticle('${article.title}')">
+              <i class="bi bi-arrow-right"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  updateStats();
+  updateChart();
+  updateTopAuthors();
+}
+
+function updateStats() {
+  const totalViews = ARTICLES.reduce((sum, a) => sum + a.views, 0);
+  const topAuthor = [...ARTICLES].sort((a, b) => b.views - a.views)[0].author;
+  
+  document.getElementById('totalViews').textContent = totalViews.toLocaleString();
+  document.getElementById('newArticles').textContent = ARTICLES.length;
+  document.getElementById('topAuthor').textContent = topAuthor;
+}
+
+function updateChart() {
+  const categories = {};
+  ARTICLES.forEach(a => {
+    categories[a.cat] = (categories[a.cat] || 0) + a.views;
+  });
+  
+  const maxViews = Math.max(...Object.values(categories));
+  const chartHTML = Object.entries(categories).map(([cat, views]) => {
+    const height = (views / maxViews) * 100;
+    return `
+      <div style="flex: 1; display: flex; flex-direction: column; align-items: center;">
+        <div class="bar-item" style="height: ${height}%; width: 100%;"></div>
+        <div class="bar-label">${cat}<br>${views}</div>
+      </div>
+    `;
+  }).join('');
+  
+  document.getElementById('categoryChart').innerHTML = chartHTML;
+}
+
+function updateTopAuthors() {
+  const authorViews = {};
+  ARTICLES.forEach(a => {
+    authorViews[a.author] = (authorViews[a.author] || 0) + a.views;
+  });
+  
+  const sorted = Object.entries(authorViews).sort((a, b) => b[1] - a[1]).slice(0, 5);
+  
+  const html = sorted.map(([author, views], idx) => `
+    <li class="mb-2">
+      <span class="badge bg-${idx === 0 ? 'warning' : idx === 1 ? 'secondary' : 'light'} text-dark me-2">${idx + 1}</span>
+      <a href="author.html" class="text-decoration-none">${author}</a>
+      <br><small class="text-muted">${views.toLocaleString()} просмотров</small>
+    </li>
+  `).join('');
+  
+  document.getElementById('topAuthors').innerHTML = html;
+}
+
+function setTimePeriod(period) {
+  document.querySelectorAll('.sidebar-widget button').forEach(btn => {
+    btn.classList.remove('active');
+  });
+  event.target.classList.add('active');
+  alert(`Выбран период: ${period}`);
+}
+
+function viewArticle(title) {
+  alert(`Статья: ${title}`);
+}
+
+function toggleNav() {
+  const navCollapse = document.getElementById('navCollapse');
+  const chevron = document.getElementById('navChevron');
+  navCollapse.classList.toggle('show');
+  chevron.classList.toggle('rotate');
+}
+
+function setDate() {
+  const options = { weekday: 'long', year: 'numeric', month: 'long', day: 'numeric' };
+  const today = new Date().toLocaleDateString('ru-RU', options);
+  document.getElementById('currentDate').textContent = today.charAt(0).toUpperCase() + today.slice(1);
+}
+
+setDate();
+loadTopArticles();
+</script>
+</body>
+</html>

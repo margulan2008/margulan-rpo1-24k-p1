@@ -1,0 +1,147 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}ВЕСТНИК — Главная{% endblock %}
+
+{% block content %}
+
+<!-- Ticker -->
+<div class="ticker-wrap mb-3">
+    <span class="ticker-inner">
+        <span class="ticker-item">Нефть марки Brent выросла на 2% — рекордный уровень за 6 месяцев</span>
+        <span class="ticker-item">Центробанк сохранил ключевую ставку на уровне 16%</span>
+        <span class="ticker-item">Ученые открыли новый вид динозавра в Аргентине</span>
+    </span>
+</div>
+
+<!-- Category strip -->
+    <div class="cat-strip mb-3">
+            <a class="cat-strip-btn active" href="{% url 'home_page' %}">Все</a>
+            {% for category in categories %}
+            <a class="cat-strip-btn" href="{% url 'news_by_category' pk=category.pk %}">{{ category.name }}</a>
+            {% endfor %}
+</div>
+
+<!-- Hero / Featured -->
+{% if hot_posts and hot_posts|length > 0 %}
+    {% with hero=hot_posts.0 %}
+    <section class="hero-article mb-4">
+        <div class="row align-items-center">
+            <div class="col-md-7">
+                <div class="hero-image" style="background-image: url('{{ hero.image_url }}'); background-size: cover; background-position:center; height:320px;"></div>
+            </div>
+            <div class="col-md-5">
+                <div class="hero-category">{{ hero.category.name }}</div>
+            <h2 class="hero-title"><a href="{% url 'read_news_page' pk=hero.pk %}">{{ hero.title }}</a></h2>
+                <div class="hero-meta">{{ hero.author }} · {{ hero.created_at|date:"d.m.Y" }}</div>
+                <p class="hero-lead">{{ hero.lead|default:hero.content|truncatechars:200 }}</p>
+            <a class="btn btn-sm btn-primary" href="{% url 'read_news_page' pk=hero.pk %}">Читать</a>
+            </div>
+        </div>
+    </section>
+    {% endwith %}
+{% endif %}
+
+<!-- Subscription Banner -->
+<div id="subscription" class="subscription-banner">
+    <h4>Подпишитесь на рассылку</h4>
+    <p>Получайте самые важные новости прямо на почту каждый день</p>
+    <form class="subscription-form">
+        <input type="email" placeholder="Ваш E-mail" required>
+        <button type="submit">Подписаться</button>
+    </form>
+</div>
+
+<!-- News grid -->
+<div class="row">
+    <div class="col-md-8">
+        <section>
+            <h4 class="section-label">Последние новости</h4>
+            <div class="row">
+                {% for post in posts %}
+                <div class="col-md-6 mb-4">
+                    <article class="news-card">
+                        <a class="card-link" href="{% url 'read_news_page' pk=post.pk %}">
+                            <div class="card-inner">
+                                <div class="card-media" style="background-image: url('{{ post.image_url }}');"></div>
+                                <div class="card-body">
+                                    <div class="card-category">{{ post.category.name }}</div>
+                                    <h5 class="card-title">{{ post.title }}</h5>
+                                    <p class="card-excerpt">{{ post.lead|default:post.content|truncatechars:120 }}</p>
+                                    <div class="card-meta d-flex align-items-center gap-2">
+                                        <img class="author-avatar" src="{% static 'img/user.svg' %}" alt="author">
+                                        <small class="text-muted">{{ post.author|default:"Редакция" }} · {{ post.created_at|date:"d.m.Y" }}</small>
+                                    </div>
+                                    <div class="mt-2">
+                                        <span class="read-more">Читать</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </a>
+                    </article>
+                </div>
+                {% if forloop.counter == 2 and ads_infeed and ads_infeed|length > 0 %}
+                {% for ad in ads_infeed|slice:":2" %}
+                <div class="col-12 mb-4">
+                    <div class="news-card ad-card">
+                        <a href="{% if ad.link %}{{ ad.link }}{% else %}#{% endif %}" target="_blank" rel="noopener">
+                            {% if ad.image %}
+                                <img src="{{ ad.image.url }}" alt="{{ ad.name }}" class="card-img">
+                            {% elif ad.image_url %}
+                                <img src="{{ ad.image_url }}" alt="{{ ad.name }}" class="card-img">
+                            {% endif %}
+                        </a>
+                        <div class="card-body">
+                            <h5 class="card-title">Реклама — {{ ad.name }}</h5>
+                            <p class="card-excerpt">Рекламное место. Вы можете изменить это объявление в админке.</p>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% if is_paginated %}
+            <nav aria-label="Page navigation">
+                <ul class="pagination">
+                    {% if page_obj.has_previous %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.previous_page_number }}">&laquo;</a></li>
+                    {% endif %}
+                      {% for p in paginator.page_range %}
+                      <li class="page-item {% if p == page_obj.number %}active{% endif %}"><a class="page-link" href="?page={{ p }}">{{ p }}</a></li>
+                      {% endfor %}
+                    {% if page_obj.has_next %}
+                    <li class="page-item"><a class="page-link" href="?page={{ page_obj.next_page_number }}">&raquo;</a></li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% endif %}
+        </section>
+    </div>
+
+    <aside class="col-md-4 sidebar">
+        {% if ads_sidebar and ads_sidebar|length > 0 %}
+            {% for ad in ads_sidebar|slice:":2" %}
+            <div class="sidebar-widget ad-widget text-center mb-3">
+                {% if ad.link %}<a href="{{ ad.link }}" target="_blank" rel="noopener">{% endif %}
+                {% if ad.image %}
+                    <img src="{{ ad.image.url }}" alt="{{ ad.name }}" class="img-fluid" />
+                {% elif ad.image_url %}
+                    <img src="{{ ad.image_url }}" alt="{{ ad.name }}" class="img-fluid" />
+                {% endif %}
+                {% if ad.link %}</a>{% endif %}
+            </div>
+            {% endfor %}
+        {% endif %}
+        <div class="sidebar-widget">
+            <h6>Тренды</h6>
+            <ul class="list-unstyled">
+                {% for t in trending %}
+                <li class="trending-item"><a href="{% url 'read_news_page' pk=t.pk %}">{{ forloop.counter }}. {{ t.title }}</a></li>
+                {% endfor %}
+            </ul>
+        </div>
+    </aside>
+</div>
+
+{% endblock %}

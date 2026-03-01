@@ -1,0 +1,634 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ВЕСТНИК — {{ title }}</title>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+<style>
+  .login-page {
+    min-height: calc(100vh - 180px);
+    display: flex;
+    align-items: center;
+    padding: 48px 0;
+  }
+  .login-panel {
+    background: var(--paper);
+    border: 2px solid var(--ink);
+    max-width: 460px;
+    width: 100%;
+    margin: 0 auto;
+  }
+  .login-panel-header {
+    background: var(--ink);
+    padding: 28px 36px;
+    text-align: center;
+  }
+  .login-panel-header .brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 42px;
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    display: block;
+    transition: color 0.2s;
+  }
+  .login-panel-header .brand:hover { color: #c8c0b0; }
+  .login-panel-header .sub {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: #6b6560;
+    margin-top: 4px;
+  }
+  .login-panel-body {
+    padding: 36px;
+  }
+  .tab-switcher {
+    display: flex;
+    border-bottom: 2px solid var(--ink);
+    margin-bottom: 28px;
+  }
+  .tab-btn {
+    flex: 1;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 10px;
+    border: none;
+    background: transparent;
+    cursor: pointer;
+    color: var(--muted);
+    border-bottom: 3px solid transparent;
+    margin-bottom: -2px;
+    transition: all 0.2s;
+  }
+  .tab-btn.active {
+    color: var(--ink);
+    border-bottom-color: var(--red);
+    font-weight: 600;
+  }
+  .tab-btn:hover:not(.active) { color: var(--ink); }
+  .field-group { margin-bottom: 20px; }
+  .field-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .field-input {
+    border: 1px solid var(--border);
+    border-radius: 0;
+    background: #fff;
+    font-family: 'Source Serif 4', serif;
+    font-size: 15px;
+    padding: 11px 14px;
+    width: 100%;
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .field-input:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: none;
+  }
+  .field-input.error { border-color: var(--red); }
+  .field-error {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--red);
+    letter-spacing: 1px;
+    margin-top: 4px;
+    display: none;
+  }
+  .password-wrapper {
+    position: relative;
+  }
+  .password-toggle {
+    position: absolute;
+    right: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: none;
+    border: none;
+    color: var(--muted);
+    cursor: pointer;
+    padding: 4px;
+    font-size: 16px;
+    transition: color 0.2s;
+  }
+  .password-toggle:hover { color: var(--ink); }
+  .main-btn {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px;
+    width: 100%;
+    cursor: pointer;
+    transition: background 0.2s;
+    margin-top: 8px;
+  }
+  .main-btn:hover { background: var(--red); }
+  .main-btn:disabled { background: var(--border); cursor: not-allowed; }
+  .divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin: 24px 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+  }
+  .divider::before, .divider::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--border);
+  }
+  .social-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid var(--border);
+    background: transparent;
+    padding: 11px;
+    width: 100%;
+    cursor: pointer;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    transition: all 0.2s;
+    margin-bottom: 10px;
+  }
+  .social-btn:hover { border-color: var(--ink); background: var(--cream); }
+  .social-btn i { font-size: 18px; }
+  .forgot-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    text-decoration: none;
+    float: right;
+    margin-top: -14px;
+    transition: color 0.2s;
+  }
+  .forgot-link:hover { color: var(--red); }
+  .remember-label {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    user-select: none;
+    margin-top: 12px;
+  }
+  .remember-label input[type="checkbox"] {
+    width: 14px;
+    height: 14px;
+    accent-color: var(--ink);
+    cursor: pointer;
+  }
+  .terms-note {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 0.5px;
+    color: var(--muted);
+    text-align: center;
+    margin-top: 20px;
+    line-height: 1.7;
+  }
+  .terms-note a { color: var(--ink); }
+  .terms-note a:hover { color: var(--red); }
+  .panel-form { display: none; }
+  .panel-form.active { display: block; }
+  .password-strength {
+    height: 3px;
+    background: var(--border);
+    margin-top: 6px;
+    position: relative;
+    overflow: hidden;
+  }
+  .password-strength-bar {
+    height: 100%;
+    width: 0%;
+    transition: width 0.3s, background 0.3s;
+  }
+  .strength-label {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    margin-top: 3px;
+  }
+  .login-benefits {
+    border-top: 1px solid var(--border);
+    padding-top: 24px;
+    margin-top: 24px;
+  }
+  .login-benefits-title {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    text-align: center;
+  }
+  .benefit-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 10px;
+    margin-bottom: 10px;
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.5;
+  }
+  .benefit-item i { color: var(--red); margin-top: 2px; flex-shrink: 0; }
+  .reset-form { display: none; }
+  .reset-form.active { display: block; }
+  .back-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    color: var(--muted);
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 20px;
+    border: none;
+    background: none;
+    padding: 0;
+    transition: color 0.2s;
+  }
+  .back-link:hover { color: var(--red); }
+  @media (max-width: 767px) {
+    .login-panel-header { padding: 20px 24px; }
+    .login-panel-body { padding: 24px; }
+    .login-panel-header .brand { font-size: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<div id="readingBar"></div>
+
+<div class="ticker-wrap">
+  <span class="ticker-inner">
+    <span class="ticker-item">Нефть марки Brent выросла на 2% — рекордный уровень за 6 месяцев</span>
+    <span class="ticker-item">Центробанк сохранил ключевую ставку на уровне 16%</span>
+    <span class="ticker-item">Ученые открыли новый вид динозавра в Аргентине</span>
+    <span class="ticker-item">Технологический индекс NASDAQ вырос на 1.8%</span>
+    <span class="ticker-item">Чемпионат мира по футболу 2026: жеребьёвка групп завершена</span>
+  </span>
+</div>
+
+<header class="masthead">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-12 col-md-8">
+        <a href="{% url 'home_page' %}" class="masthead-title d-block">ВЕСТНИК</a>
+        <div class="masthead-sub">Независимое издание · Основано в 2024 · Мировые новости</div>
+      </div>
+      <div class="col-12 col-md-4 date-line mt-2 mt-md-0">
+        <div id="currentDate"></div>
+        <div>Выпуск №247</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <button class="mobile-nav-toggle" onclick="toggleNav()">
+      <span><i class="bi bi-list me-1"></i> Разделы</span>
+      <i class="bi bi-chevron-down" id="navChevron"></i>
+    </button>
+    <div class="nav-collapse" id="navCollapse">
+      <ul class="nav flex-wrap" id="mainNav">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}">Все новости</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Политика</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Экономика</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Технологии</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Наука</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Спорт</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about_page' %}">О нас</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'login_page' %}"><i class="bi bi-person me-1"></i>Войти</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="login-page">
+  <div class="container">
+    <div class="login-panel fade-in">
+      <div class="login-panel-header">
+        <a href="{% url 'home_page' %}" class="brand">ВЕСТНИК</a>
+        <div class="sub">Личный кабинет читателя</div>
+      </div>
+      <div class="login-panel-body">
+
+        <div id="authArea">
+          {% if messages %}
+            <div class="mb-3">
+              {% for message in messages %}
+                <div class="alert {% if message.tags %}alert-{{ message.tags }}{% else %}alert-info{% endif %}" role="alert">{{ message }}</div>
+              {% endfor %}
+            </div>
+          {% endif %}
+
+          <div class="tab-switcher">
+            <button class="tab-btn active" onclick="switchTab('login')">Войти</button>
+            <button class="tab-btn" onclick="switchTab('register')">Регистрация</button>
+          </div>
+
+          <!-- LOGIN FORM -->
+          <form method="post" action="{% url 'login_page' %}">
+            {% csrf_token %}
+            <input type="hidden" name="next" value="{{ request.GET.next }}" />
+
+            <div class="panel-form active" id="loginForm">
+              <div class="field-group">
+                <label class="field-label">E-mail</label>
+                <input type="email" name="username" class="field-input" id="loginEmail" placeholder="ваш@email.ru" value="{{ request.POST.username|default:'' }}" oninput="clearError('loginEmail')"/>
+                <div class="field-error" id="loginEmailErr">Введите корректный email</div>
+              </div>
+              <div class="field-group">
+                <label class="field-label">Пароль</label>
+                <a href="#" class="forgot-link" onclick="showReset();return false">Забыли?</a>
+                <div class="password-wrapper">
+                  <input type="password" name="password" class="field-input" id="loginPass" placeholder="••••••••" oninput="clearError('loginPass')"/>
+                  <button type="button" class="password-toggle" onclick="togglePass('loginPass',this)"><i class="bi bi-eye"></i></button>
+                </div>
+                <div class="field-error" id="loginPassErr">Введите пароль</div>
+              </div>
+              <label class="remember-label">
+                <input type="checkbox" id="rememberMe" name="remember"/> Запомнить меня
+              </label>
+              <button class="main-btn" type="submit">
+                <i class="bi bi-box-arrow-in-right me-2"></i>Войти
+              </button>
+
+              <div class="divider">или</div>
+
+              <button type="button" class="social-btn" onclick="socialLogin('Telegram')">
+                <i class="bi bi-telegram" style="color:#2AABEE"></i>Войти через Telegram
+              </button>
+              <button type="button" class="social-btn" onclick="socialLogin('VK')">
+                <i class="bi bi-vk" style="color:#4C75A3"></i>Войти через ВКонтакте
+              </button>
+
+              <div class="login-benefits">
+                <div class="login-benefits-title">Что даёт аккаунт</div>
+                <div class="benefit-item"><i class="bi bi-bookmark-fill"></i>Сохраняйте статьи и читайте позже</div>
+                <div class="benefit-item"><i class="bi bi-bell-fill"></i>Персональные уведомления по темам</div>
+                <div class="benefit-item"><i class="bi bi-newspaper"></i>Утренний дайджест на ваш email</div>
+                <div class="benefit-item"><i class="bi bi-chat-fill"></i>Участие в обсуждениях</div>
+              </div>
+            </div>
+          </form>
+
+          <!-- REGISTER FORM -->
+          <div class="panel-form" id="registerForm">
+            <div class="field-group">
+              <label class="field-label">Имя</label>
+              <input type="text" class="field-input" id="regName" placeholder="Иван Петров" oninput="clearError('regName')"/>
+              <div class="field-error" id="regNameErr">Введите ваше имя</div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">E-mail</label>
+              <input type="email" class="field-input" id="regEmail" placeholder="ваш@email.ru" oninput="clearError('regEmail')"/>
+              <div class="field-error" id="regEmailErr">Введите корректный email</div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Пароль</label>
+              <div class="password-wrapper">
+                <input type="password" class="field-input" id="regPass" placeholder="Минимум 8 символов" oninput="checkStrength();clearError('regPass')"/>
+                <button type="button" class="password-toggle" onclick="togglePass('regPass',this)"><i class="bi bi-eye"></i></button>
+              </div>
+              <div class="password-strength"><div class="password-strength-bar" id="strengthBar"></div></div>
+              <div class="strength-label" id="strengthLabel"></div>
+              <div class="field-error" id="regPassErr">Пароль должен содержать минимум 8 символов</div>
+            </div>
+            <div class="field-group">
+              <label class="field-label">Повторите пароль</label>
+              <div class="password-wrapper">
+                <input type="password" class="field-input" id="regPass2" placeholder="••••••••" oninput="clearError('regPass2')"/>
+                <button type="button" class="password-toggle" onclick="togglePass('regPass2',this)"><i class="bi bi-eye"></i></button>
+              </div>
+              <div class="field-error" id="regPass2Err">Пароли не совпадают</div>
+            </div>
+            <button class="main-btn" onclick="doRegister()">
+              <i class="bi bi-person-plus me-2"></i>Создать аккаунт
+            </button>
+            <div class="terms-note">Регистрируясь, вы соглашаетесь с <a href="#">Условиями использования</a> и <a href="#">Политикой конфиденциальности</a></div>
+          </div>
+        </div>
+
+        <!-- RESET PASSWORD -->
+        <div class="reset-form" id="resetArea">
+          <button class="back-link" onclick="hideReset()"><i class="bi bi-arrow-left"></i> Назад</button>
+          <div style="font-family:'Playfair Display',serif;font-size:22px;font-weight:700;margin-bottom:8px">Сброс пароля</div>
+          <p style="font-size:13px;color:var(--muted);margin-bottom:24px">Укажите email, и мы отправим ссылку для создания нового пароля.</p>
+          <div class="field-group">
+            <label class="field-label">E-mail</label>
+            <input type="email" class="field-input" id="resetEmail" placeholder="ваш@email.ru"/>
+          </div>
+          <button class="main-btn" onclick="doReset()"><i class="bi bi-send me-2"></i>Отправить ссылку</button>
+          <div id="resetSuccess" style="display:none;font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--muted);text-align:center;margin-top:16px;line-height:1.6">
+            <i class="bi bi-check-circle-fill" style="color:var(--red);font-size:24px;display:block;margin-bottom:8px"></i>
+            Письмо отправлено. Проверьте почту.
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="footer-brand">ВЕСТНИК</div>
+        <p class="mt-2" style="font-size:11px;color:#666">Независимое медиа. Правда без фильтров.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Разделы</h6>
+        <a href="#">Политика</a><a href="#">Экономика</a><a href="#">Технологии</a><a href="#">Наука</a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Редакция</h6>
+        <a href="{% url 'about_page' %}">О нас</a><a href="{% url 'contacts_page' %}">Контакты</a><a href="#">Реклама</a><a href="#">Вакансии</a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Соцсети</h6>
+        <a href="#"><i class="bi bi-telegram me-2"></i>Telegram</a>
+        <a href="#"><i class="bi bi-youtube me-2"></i>YouTube</a>
+        <a href="#"><i class="bi bi-vk me-2"></i>ВКонтакте</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 ВЕСТНИК · Все права защищены · 18+</div>
+  </div>
+</footer>
+
+<div class="mobile-bottom-nav">
+  <a href="{% url 'home_page' %}"><i class="bi bi-house-fill"></i><span>Главная</span></a>
+  <a href="{% url 'archive_page' %}"><i class="bi bi-archive-fill"></i><span>Архив</span></a>
+  <a href="{% url 'about_page' %}"><i class="bi bi-info-circle-fill"></i><span>О нас</span></a>
+  <a href="{% url 'contacts_page' %}"><i class="bi bi-envelope-fill"></i><span>Контакты</span></a>
+  <a href="{% url 'login_page' %}" class="active"><i class="bi bi-person-fill"></i><span>Войти</span></a>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="liveToast" class="toast align-items-center" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg"></div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById('currentDate').textContent = new Date().toLocaleDateString('ru-RU',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+function switchTab(tab) {
+  document.querySelectorAll('.tab-btn').forEach((b,i) => b.classList.toggle('active', (i===0 && tab==='login')||(i===1 && tab==='register')));
+  document.getElementById('loginForm').classList.toggle('active', tab==='login');
+  document.getElementById('registerForm').classList.toggle('active', tab==='register');
+}
+
+function togglePass(id, btn) {
+  const input = document.getElementById(id);
+  const showing = input.type === 'text';
+  input.type = showing ? 'password' : 'text';
+  btn.querySelector('i').className = showing ? 'bi bi-eye' : 'bi bi-eye-slash';
+}
+
+function clearError(id) {
+  const input = document.getElementById(id);
+  if(input) input.classList.remove('error');
+  const err = document.getElementById(id+'Err');
+  if(err) err.style.display = 'none';
+}
+
+function showError(id, msg) {
+  const input = document.getElementById(id);
+  if(input) input.classList.add('error');
+  const err = document.getElementById(id+'Err');
+  if(err) { if(msg) err.textContent=msg; err.style.display='block'; }
+}
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pass = document.getElementById('loginPass').value;
+  let valid = true;
+  if (!email || !email.includes('@')) { showError('loginEmail'); valid=false; }
+  if (!pass) { showError('loginPass'); valid=false; }
+  if (!valid) return;
+  showToast('Выполняется вход...');
+  setTimeout(() => showToast('Добро пожаловать, ' + email.split('@')[0] + '!'), 1200);
+}
+
+function doRegister() {
+  const name = document.getElementById('regName').value.trim();
+  const email = document.getElementById('regEmail').value.trim();
+  const pass = document.getElementById('regPass').value;
+  const pass2 = document.getElementById('regPass2').value;
+  let valid = true;
+  if (!name) { showError('regName'); valid=false; }
+  if (!email || !email.includes('@')) { showError('regEmail'); valid=false; }
+  if (pass.length < 8) { showError('regPass'); valid=false; }
+  if (pass !== pass2) { showError('regPass2'); valid=false; }
+  if (!valid) return;
+  showToast('Аккаунт создан! Проверьте почту для подтверждения.');
+}
+
+function socialLogin(provider) {
+  showToast('Перенаправление на ' + provider + '...');
+}
+
+function checkStrength() {
+  const pass = document.getElementById('regPass').value;
+  const bar = document.getElementById('strengthBar');
+  const label = document.getElementById('strengthLabel');
+  let score = 0;
+  if (pass.length >= 8) score++;
+  if (/[A-Z]/.test(pass)) score++;
+  if (/[0-9]/.test(pass)) score++;
+  if (/[^A-Za-z0-9]/.test(pass)) score++;
+  const levels = [
+    {width:'0%', color:'var(--border)', text:''},
+    {width:'25%', color:'var(--red)', text:'Слабый'},
+    {width:'50%', color:'var(--gold)', text:'Средний'},
+    {width:'75%', color:'#2ecc71', text:'Хороший'},
+    {width:'100%', color:'#27ae60', text:'Надёжный'},
+  ];
+  const l = levels[Math.min(score, 4)];
+  bar.style.width = l.width;
+  bar.style.background = l.color;
+  label.textContent = l.text;
+  label.style.color = l.color;
+}
+
+function showReset() {
+  document.getElementById('authArea').style.display = 'none';
+  document.getElementById('resetArea').classList.add('active');
+}
+
+function hideReset() {
+  document.getElementById('authArea').style.display = 'block';
+  document.getElementById('resetArea').classList.remove('active');
+  document.getElementById('resetSuccess').style.display = 'none';
+  document.getElementById('resetEmail').value = '';
+}
+
+function doReset() {
+  const email = document.getElementById('resetEmail').value.trim();
+  if (!email || !email.includes('@')) { showToast('Введите корректный email'); return; }
+  document.getElementById('resetSuccess').style.display = 'block';
+}
+
+function toggleNav(){
+  const c=document.getElementById('navCollapse');
+  c.classList.toggle('open');
+  document.getElementById('navChevron').className=c.classList.contains('open')?'bi bi-chevron-up':'bi bi-chevron-down';
+}
+
+function showToast(msg){
+  document.getElementById('toastMsg').textContent=msg;
+  new bootstrap.Toast(document.getElementById('liveToast'),{delay:2500}).show();
+}
+
+window.addEventListener('scroll',()=>{
+  const el=document.documentElement;
+  const pct=el.scrollHeight-el.clientHeight>0?((el.scrollTop||document.body.scrollTop)/(el.scrollHeight-el.clientHeight))*100:0;
+  document.getElementById('readingBar').style.width=pct+'%';
+});
+</script>
+</body>
+</html>

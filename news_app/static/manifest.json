@@ -1,0 +1,9 @@
+{
+  "name": "ВЕСТНИК",
+  "short_name": "ВЕСТНИК",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#b8860b",
+  "icons": [{ "src": "/static/img/logo.svg", "sizes": "192x192", "type": "image/svg+xml" }]
+}

@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>ВЕСТНИК — {{ title }}</title>
+{% load static %}
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/css/bootstrap.min.css" rel="stylesheet"/>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-icons/1.11.3/font/bootstrap-icons.min.css" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Source+Serif+4:ital,wght@0,300;0,400;0,600;1,400&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet"/>
+<link rel="stylesheet" href="{% static 'css/styles.css' %}"/>
+<style>
+  .page-banner {
+    background: var(--cream);
+    border-bottom: 3px double var(--ink);
+    padding: 56px 0 40px;
+    margin-bottom: 52px;
+  }
+  .page-banner-eyebrow {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    color: var(--red);
+    margin-bottom: 12px;
+  }
+  .page-banner-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    font-size: clamp(40px, 7vw, 80px);
+    line-height: 1;
+    letter-spacing: -2px;
+  }
+  .page-banner-lead {
+    font-size: 17px;
+    font-style: italic;
+    color: var(--muted);
+    margin-top: 12px;
+  }
+  .contact-card {
+    border: 1px solid var(--border);
+    padding: 28px;
+    background: var(--cream);
+    height: 100%;
+    transition: border-color 0.2s;
+  }
+  .contact-card:hover { border-color: var(--ink); }
+  .contact-card-icon {
+    font-size: 32px;
+    color: var(--red);
+    margin-bottom: 16px;
+  }
+  .contact-card-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 20px;
+    font-weight: 700;
+    margin-bottom: 8px;
+  }
+  .contact-card-desc {
+    font-size: 13px;
+    color: var(--muted);
+    line-height: 1.6;
+    margin-bottom: 16px;
+  }
+  .contact-card-link {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 1px;
+    color: var(--ink);
+    text-decoration: none;
+    border-bottom: 1px solid var(--border);
+    padding-bottom: 2px;
+    transition: border-color 0.2s, color 0.2s;
+    display: inline-block;
+  }
+  .contact-card-link:hover { color: var(--red); border-color: var(--red); }
+  .form-label-custom {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--muted);
+    display: block;
+    margin-bottom: 6px;
+  }
+  .form-control-custom {
+    border: 1px solid var(--border);
+    border-radius: 0;
+    background: #fff;
+    font-family: 'Source Serif 4', serif;
+    font-size: 14px;
+    padding: 10px 14px;
+    width: 100%;
+    color: var(--ink);
+    transition: border-color 0.2s;
+  }
+  .form-control-custom:focus {
+    outline: none;
+    border-color: var(--ink);
+    box-shadow: none;
+  }
+  textarea.form-control-custom { resize: vertical; min-height: 140px; }
+  .submit-btn {
+    background: var(--ink);
+    color: #fff;
+    border: none;
+    border-radius: 0;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    padding: 14px 32px;
+    cursor: pointer;
+    transition: background 0.2s;
+    width: 100%;
+  }
+  .submit-btn:hover { background: var(--red); }
+  .form-box {
+    border: 1px solid var(--border);
+    padding: 36px;
+    background: var(--paper);
+  }
+  .form-box-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 28px;
+    font-weight: 900;
+    border-bottom: 2px solid var(--ink);
+    padding-bottom: 12px;
+    margin-bottom: 28px;
+  }
+  .topic-chip {
+    display: inline-block;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    letter-spacing: 1px;
+    text-transform: uppercase;
+    padding: 5px 12px;
+    border: 1px solid var(--border);
+    margin: 3px;
+    cursor: pointer;
+    transition: all 0.2s;
+    user-select: none;
+  }
+  .topic-chip.selected {
+    background: var(--ink);
+    color: #fff;
+    border-color: var(--ink);
+  }
+  .topic-chip:hover:not(.selected) {
+    border-color: var(--ink);
+    background: var(--cream);
+  }
+  .map-placeholder {
+    background: var(--cream);
+    border: 1px solid var(--border);
+    height: 220px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 12px;
+    color: var(--muted);
+  }
+  .map-placeholder i { font-size: 36px; color: var(--red); }
+  .map-address {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 11px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-align: center;
+    line-height: 1.8;
+  }
+  .double-rule { border: none; border-top: 3px double var(--ink); margin: 48px 0; }
+  .char-count {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    text-align: right;
+    margin-top: 4px;
+  }
+  .form-group { margin-bottom: 22px; }
+  select.form-control-custom { appearance: none; -webkit-appearance: none; cursor: pointer; }
+  .success-message {
+    display: none;
+    background: var(--cream);
+    border: 2px solid var(--ink);
+    padding: 32px;
+    text-align: center;
+  }
+  .success-message i { font-size: 48px; color: var(--red); display: block; margin-bottom: 16px; }
+  .success-message h4 { font-family: 'Playfair Display', serif; font-size: 24px; font-weight: 900; }
+  .success-message p { font-size: 14px; color: var(--muted); }
+</style>
+</head>
+<body>
+
+<div id="readingBar"></div>
+
+<div class="ticker-wrap">
+  <span class="ticker-inner">
+    <span class="ticker-item">Нефть марки Brent выросла на 2% — рекордный уровень за 6 месяцев</span>
+    <span class="ticker-item">Центробанк сохранил ключевую ставку на уровне 16%</span>
+    <span class="ticker-item">Ученые открыли новый вид динозавра в Аргентине</span>
+    <span class="ticker-item">Технологический индекс NASDAQ вырос на 1.8%</span>
+    <span class="ticker-item">Чемпионат мира по футболу 2026: жеребьёвка групп завершена</span>
+  </span>
+</div>
+
+<header class="masthead">
+  <div class="container">
+    <div class="row align-items-end">
+      <div class="col-12 col-md-8">
+        <a href="{% url 'home_page' %}" class="masthead-title d-block">ВЕСТНИК</a>
+        <div class="masthead-sub">Независимое издание · Основано в 2024 · Мировые новости</div>
+      </div>
+      <div class="col-12 col-md-4 date-line mt-2 mt-md-0">
+        <div id="currentDate"></div>
+        <div>Выпуск №247</div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<nav class="main-nav">
+  <div class="container">
+    <button class="mobile-nav-toggle" onclick="toggleNav()">
+      <span><i class="bi bi-list me-1"></i> Разделы</span>
+      <i class="bi bi-chevron-down" id="navChevron"></i>
+    </button>
+    <div class="nav-collapse" id="navCollapse">
+      <ul class="nav flex-wrap" id="mainNav">
+        <li class="nav-item"><a class="nav-link" href="{% url 'home_page' %}">Все новости</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Политика</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Экономика</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Технологии</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Наука</a></li>
+        <li class="nav-item"><a class="nav-link" href="#">Спорт</a></li>
+        <li class="nav-item"><a class="nav-link" href="{% url 'about_page' %}">О нас</a></li>
+        <li class="nav-item"><a class="nav-link active" href="{% url 'contacts_page' %}">Контакты</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<div class="page-banner">
+  <div class="container">
+    <div class="page-banner-eyebrow">Связаться с нами</div>
+    <div class="page-banner-title">Контакты</div>
+    <p class="page-banner-lead">Мы всегда открыты для диалога — с читателями, источниками и партнёрами.</p>
+  </div>
+</div>
+
+<main class="container">
+
+  <div class="row g-3 mb-5">
+    <div class="col-md-3">
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="bi bi-envelope-fill"></i></div>
+        <div class="contact-card-title">Редакция</div>
+        <p class="contact-card-desc">Вопросы о публикациях, ошибки в материалах, предложения по темам.</p>
+        <a href="mailto:editor@vestnik.ru" class="contact-card-link">editor@vestnik.ru</a>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="bi bi-megaphone-fill"></i></div>
+        <div class="contact-card-title">Реклама</div>
+        <p class="contact-card-desc">Партнёрства, рекламные размещения и спецпроекты с брендами.</p>
+        <a href="mailto:ads@vestnik.ru" class="contact-card-link">ads@vestnik.ru</a>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="bi bi-shield-fill"></i></div>
+        <div class="contact-card-title">Пресс-служба</div>
+        <p class="contact-card-desc">Для официальных запросов, пресс-релизов и аккредитации на мероприятия.</p>
+        <a href="mailto:press@vestnik.ru" class="contact-card-link">press@vestnik.ru</a>
+      </div>
+    </div>
+    <div class="col-md-3">
+      <div class="contact-card">
+        <div class="contact-card-icon"><i class="bi bi-person-badge-fill"></i></div>
+        <div class="contact-card-title">Карьера</div>
+        <p class="contact-card-desc">Вакансии журналистов, редакторов и технических специалистов.</p>
+        <a href="mailto:hr@vestnik.ru" class="contact-card-link">hr@vestnik.ru</a>
+      </div>
+    </div>
+  </div>
+
+  <div class="double-rule"></div>
+
+  <div class="row">
+    <div class="col-lg-7">
+      <div class="form-box">
+        <div class="form-box-title">Написать нам</div>
+
+        <div id="contactForm">
+          <div class="form-group">
+            <label class="form-label-custom">Тема обращения</label>
+            <div style="margin-bottom:8px">
+              <span class="topic-chip selected" onclick="selectTopic(this)">Вопрос редакции</span>
+              <span class="topic-chip" onclick="selectTopic(this)">Исправление ошибки</span>
+              <span class="topic-chip" onclick="selectTopic(this)">Предложить тему</span>
+              <span class="topic-chip" onclick="selectTopic(this)">Реклама</span>
+              <span class="topic-chip" onclick="selectTopic(this)">Партнёрство</span>
+              <span class="topic-chip" onclick="selectTopic(this)">Другое</span>
+            </div>
+          </div>
+
+          <div class="row g-3">
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label-custom">Ваше имя</label>
+                <input type="text" class="form-control-custom" id="contactName" placeholder="Иван Петров"/>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="form-group">
+                <label class="form-label-custom">E-mail</label>
+                <input type="email" class="form-control-custom" id="contactEmail" placeholder="ivan@example.ru"/>
+              </div>
+            </div>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label-custom">Заголовок</label>
+            <input type="text" class="form-control-custom" id="contactSubject" placeholder="Кратко опишите суть обращения"/>
+          </div>
+
+          <div class="form-group">
+            <label class="form-label-custom">Сообщение</label>
+            <textarea class="form-control-custom" id="contactMsg" placeholder="Подробно изложите ваше обращение..." oninput="updateCount()"></textarea>
+            <div class="char-count"><span id="charCount">0</span> / 2000 символов</div>
+          </div>
+
+          <button class="submit-btn" onclick="submitForm()">
+            <i class="bi bi-send me-2"></i>Отправить сообщение
+          </button>
+        </div>
+
+        <div class="success-message" id="successMsg">
+          <i class="bi bi-check-circle-fill"></i>
+          <h4>Сообщение отправлено!</h4>
+          <p>Мы получили ваше обращение и ответим в течение 2 рабочих дней.<br/>Спасибо за обратную связь.</p>
+          <button class="submit-btn mt-3" style="width:auto;padding:10px 28px" onclick="resetForm()">Отправить ещё</button>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-5 sidebar">
+      <div class="sidebar-widget">
+        <h6>Офис редакции</h6>
+        <div class="map-placeholder">
+          <i class="bi bi-geo-alt-fill"></i>
+          <div class="map-address">Москва · ул. Пречистенка, 12<br/>офис 401 · 119034</div>
+        </div>
+        <div style="font-family:'JetBrains Mono',monospace;font-size:12px;line-height:2;margin-top:16px">
+          <div><i class="bi bi-clock me-2" style="color:var(--red)"></i>Пн–Пт: 9:00 — 20:00</div>
+          <div><i class="bi bi-telephone me-2" style="color:var(--red)"></i>+7 (495) 000-00-00</div>
+          <div><i class="bi bi-geo me-2" style="color:var(--red)"></i>м. Кропоткинская, 5 мин пешком</div>
+        </div>
+      </div>
+
+      <div class="sidebar-widget">
+        <h6>Мы в соцсетях</h6>
+        <div style="display:flex;flex-direction:column;gap:10px">
+          <a href="#" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;padding:10px;border:1px solid var(--border);transition:all 0.2s" onmouseover="this.style.borderColor='var(--ink)'" onmouseout="this.style.borderColor='var(--border)'">
+            <i class="bi bi-telegram" style="font-size:20px;color:#2AABEE"></i>
+            <div><div style="font-weight:600">Telegram</div><div style="color:var(--muted);font-size:10px">@vestnik_news · 520K подписчиков</div></div>
+          </a>
+          <a href="#" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;padding:10px;border:1px solid var(--border);transition:all 0.2s" onmouseover="this.style.borderColor='var(--ink)'" onmouseout="this.style.borderColor='var(--border)'">
+            <i class="bi bi-vk" style="font-size:20px;color:#4C75A3"></i>
+            <div><div style="font-weight:600">ВКонтакте</div><div style="color:var(--muted);font-size:10px">vk.com/vestnik · 380K подписчиков</div></div>
+          </a>
+          <a href="#" style="display:flex;align-items:center;gap:12px;text-decoration:none;color:var(--ink);font-family:'JetBrains Mono',monospace;font-size:12px;padding:10px;border:1px solid var(--border);transition:all 0.2s" onmouseover="this.style.borderColor='var(--ink)'" onmouseout="this.style.borderColor='var(--border)'">
+            <i class="bi bi-youtube" style="font-size:20px;color:#FF0000"></i>
+            <div><div style="font-weight:600">YouTube</div><div style="color:var(--muted);font-size:10px">youtube.com/vestnik · 210K подписчиков</div></div>
+          </a>
+        </div>
+      </div>
+
+      <div class="sidebar-widget">
+        <h6>Для источников</h6>
+        <p style="font-size:13px;color:var(--muted);line-height:1.7">Если у вас есть важная информация, которую вы хотите передать редакции анонимно, воспользуйтесь нашим защищённым каналом связи.</p>
+        <a href="#" class="submit-btn" style="display:block;text-align:center;text-decoration:none;padding:12px">
+          <i class="bi bi-incognito me-2"></i>Анонимная связь
+        </a>
+      </div>
+    </div>
+  </div>
+
+</main>
+
+<footer>
+  <div class="container">
+    <div class="row">
+      <div class="col-md-3 mb-4">
+        <div class="footer-brand">ВЕСТНИК</div>
+        <p class="mt-2" style="font-size:11px;color:#666">Независимое медиа. Правда без фильтров.</p>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Разделы</h6>
+        <a href="#">Политика</a><a href="#">Экономика</a><a href="#">Технологии</a><a href="#">Наука</a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Редакция</h6>
+        <a href="{% url 'about_page' %}">О нас</a><a href="{% url 'contacts_page' %}">Контакты</a><a href="#">Реклама</a><a href="#">Вакансии</a>
+      </div>
+      <div class="col-md-3 mb-4">
+        <h6>Соцсети</h6>
+        <a href="#"><i class="bi bi-telegram me-2"></i>Telegram</a>
+        <a href="#"><i class="bi bi-youtube me-2"></i>YouTube</a>
+        <a href="#"><i class="bi bi-vk me-2"></i>ВКонтакте</a>
+      </div>
+    </div>
+    <div class="footer-bottom">© 2026 ВЕСТНИК · Все права защищены · 18+</div>
+  </div>
+</footer>
+
+<div class="mobile-bottom-nav">
+  <a href="{% url 'home_page' %}"><i class="bi bi-house-fill"></i><span>Главная</span></a>
+  <a href="{% url 'archive_page' %}"><i class="bi bi-archive-fill"></i><span>Архив</span></a>
+  <a href="{% url 'about_page' %}"><i class="bi bi-info-circle-fill"></i><span>О нас</span></a>
+  <a href="{% url 'contacts_page' %}" class="active"><i class="bi bi-envelope-fill"></i><span>Контакты</span></a>
+  <a href="{% url 'login_page' %}"><i class="bi bi-person-fill"></i><span>Войти</span></a>
+</div>
+
+<div class="position-fixed bottom-0 end-0 p-3" style="z-index:9999">
+  <div id="liveToast" class="toast align-items-center" role="alert">
+    <div class="d-flex">
+      <div class="toast-body" id="toastMsg"></div>
+      <button type="button" class="btn-close me-2 m-auto" data-bs-dismiss="toast"></button>
+    </div>
+  </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script>
+document.getElementById('currentDate').textContent = new Date().toLocaleDateString('ru-RU',{weekday:'long',year:'numeric',month:'long',day:'numeric'});
+
+function selectTopic(el) {
+  document.querySelectorAll('.topic-chip').forEach(c => c.classList.remove('selected'));
+  el.classList.add('selected');
+}
+
+function updateCount() {
+  const len = document.getElementById('contactMsg').value.length;
+  const el = document.getElementById('charCount');
+  el.textContent = len;
+  el.style.color = len > 1800 ? 'var(--red)' : 'var(--muted)';
+}
+
+function submitForm() {
+  const name = document.getElementById('contactName').value.trim();
+  const email = document.getElementById('contactEmail').value.trim();
+  const msg = document.getElementById('contactMsg').value.trim();
+  if (!name) { showToast('Введите ваше имя'); return; }
+  if (!email || !email.includes('@')) { showToast('Введите корректный email'); return; }
+  if (!msg) { showToast('Напишите сообщение'); return; }
+  document.getElementById('contactForm').style.display = 'none';
+  document.getElementById('successMsg').style.display = 'block';
+}
+
+function resetForm() {
+  document.getElementById('contactForm').style.display = 'block';
+  document.getElementById('successMsg').style.display = 'none';
+  document.getElementById('contactName').value = '';
+  document.getElementById('contactEmail').value = '';
+  document.getElementById('contactSubject').value = '';
+  document.getElementById('contactMsg').value = '';
+  updateCount();
+}
+
+function toggleNav(){
+  const c=document.getElementById('navCollapse');
+  c.classList.toggle('open');
+  document.getElementById('navChevron').className=c.classList.contains('open')?'bi bi-chevron-up':'bi bi-chevron-down';
+}
+
+function showToast(msg){
+  document.getElementById('toastMsg').textContent=msg;
+  new bootstrap.Toast(document.getElementById('liveToast'),{delay:2500}).show();
+}
+
+window.addEventListener('scroll',()=>{
+  const el=document.documentElement;
+  const pct=el.scrollHeight-el.clientHeight>0?((el.scrollTop||document.body.scrollTop)/(el.scrollHeight-el.clientHeight))*100:0;
+  document.getElementById('readingBar').style.width=pct+'%';
+});
+</script>
+</body>
+</html>
